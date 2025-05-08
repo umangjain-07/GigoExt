@@ -81,19 +81,27 @@ namespace GigoExt {
     }
     /**馬達腳位自行宣告
       */
-    //% blockId=DDMmotor block="speed pin %MSpeedPin|speed (0~255) %MSpeedValue|direction pin %McontrolPin|rotation direction(0~1) %McontrolValue" blockExternalInputs=false
-    //% McontrolValue.min=0 McontrolValue.max=1 
-    //% MSpeedValue.min=0 MSpeedValue.max=255   
-    //% MSpeedPin.fieldEditor="gridpicker" MSpeedPin.fieldOptions.columns=4
-    //% MSpeedPin.fieldOptions.tooltips="false" MSpeedPin.fieldOptions.width="300"
-    //% McontrolPin.fieldEditor="gridpicker" McontrolPin.fieldOptions.columns=4
-    //% McontrolPin.fieldOptions.tooltips="false" McontrolPin.fieldOptions.width="300"
-    //% group="Motor"
-    export function DDMmotor(MSpeedPin: AnalogPin, MSpeedValue: number, McontrolPin: DigitalPin, McontrolValue: number): void {
-        pins.analogWritePin(MSpeedPin, pins.map(MSpeedValue, 0, 255, 0, 1020));
-        pins.digitalWritePin(McontrolPin, pins.map(McontrolValue, 0, 1, 0, 1));
+    //% blockId=DDMmotor block="speed pin %MSpeedPin|speed (0~255) %MSpeedValue|direction pin %McontrolPin|rotation direction(0~1) %McontrolValue|time (ms) %time" blockExternalInputs=false
+//% McontrolValue.min=0 McontrolValue.max=1 
+//% MSpeedValue.min=0 MSpeedValue.max=255   
+//% MSpeedPin.fieldEditor="gridpicker" MSpeedPin.fieldOptions.columns=4
+//% MSpeedPin.fieldOptions.tooltips="false" MSpeedPin.fieldOptions.width="300"
+//% McontrolPin.fieldEditor="gridpicker" McontrolPin.fieldOptions.columns=4
+//% McontrolPin.fieldOptions.tooltips="false" McontrolPin.fieldOptions.width="300"
+//% MtimePin.fieldEditor="gridpicker" McontrolPin.fieldOptions.columns=4
+//% MtimePin.fieldOptions.tooltips="false" McontrolPin.fieldOptions.width="300"
+//% group="Motor"
+export function DDMmotor(MSpeedPin: AnalogPin, MSpeedValue: number, McontrolPin: DigitalPin, McontrolValue: number, MtimePin: number = -1): void {
+    pins.analogWritePin(MSpeedPin, pins.map(MSpeedValue, 0, 255, 0, 1020));
+    pins.digitalWritePin(McontrolPin, pins.map(McontrolValue, 0, 1, 0, 1));
 
+    if (MtimePin > 0) {
+        control.waitMicros(MtimePin * 1000);
+        // Stop the motor after the specified time
+        pins.analogWritePin(MSpeedPin, 0);
+        pins.digitalWritePin(McontrolPin, 0);
     }
+}
 
     ////////////////////////////////
     //          超音波            //
