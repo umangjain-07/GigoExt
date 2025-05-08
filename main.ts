@@ -81,19 +81,35 @@ namespace GigoExt {
     }
     /**馬達腳位自行宣告
       */
-    //% blockId=DDMmotor block="speed pin %MSpeedPin|speed (0~255) %MSpeedValue|direction pin %McontrolPin|rotation direction(0~1) %McontrolValue" blockExternalInputs=false
-    //% McontrolValue.min=0 McontrolValue.max=1 
-    //% MSpeedValue.min=0 MSpeedValue.max=255   
-    //% MSpeedPin.fieldEditor="gridpicker" MSpeedPin.fieldOptions.columns=4
-    //% MSpeedPin.fieldOptions.tooltips="false" MSpeedPin.fieldOptions.width="300"
-    //% McontrolPin.fieldEditor="gridpicker" McontrolPin.fieldOptions.columns=4
-    //% McontrolPin.fieldOptions.tooltips="false" McontrolPin.fieldOptions.width="300"
-    //% group="Motor"
-    export function DDMmotor(MSpeedPin: AnalogPin, MSpeedValue: number, McontrolPin: DigitalPin, McontrolValue: number): void {
-        pins.analogWritePin(MSpeedPin, pins.map(MSpeedValue, 0, 255, 0, 1020));
-        pins.digitalWritePin(McontrolPin, pins.map(McontrolValue, 0, 1, 0, 1));
+    //% blockId=DDMmotor block="speed pin %MSpeedPin|speed (0~255) %MSpeedValue|direction pin %McontrolPin|rotation direction(0~1) %McontrolValue|for %timeMs|ms"
+//% McontrolValue.min=0 McontrolValue.max=1 
+//% MSpeedValue.min=0 MSpeedValue.max=255
+//% timeMs.defl=-1 timeMs.min=-1 
+//% timeMs.shadow="timePicker"  // <-- Forces an input field with ms units
+//% MSpeedPin.fieldEditor="gridpicker" MSpeedPin.fieldOptions.columns=4
+//% MSpeedPin.fieldOptions.tooltips="false" MSpeedPin.fieldOptions.width="300"
+//% McontrolPin.fieldEditor="gridpicker" McontrolPin.fieldOptions.columns=4
+//% McontrolPin.fieldOptions.tooltips="false" McontrolPin.fieldOptions.width="300"
+//% group="Motor"
+export function DDMmotor(
+    MSpeedPin: AnalogPin,
+    MSpeedValue: number,
+    McontrolPin: DigitalPin,
+    McontrolValue: number,
+    timeMs: number = -1  // Default: run indefinitely
+): void {
+    // Set motor speed and direction
+    pins.analogWritePin(MSpeedPin, pins.map(MSpeedValue, 0, 255, 0, 1020));
+    pins.digitalWritePin(McontrolPin, McontrolValue);
 
+    // Stop after timeMs if >= 0
+    if (timeMs >= 0) {
+        control.inBackground(() => {
+            basic.pause(timeMs);
+            pins.analogWritePin(MSpeedPin, 0); // Stop motor
+        });
     }
+}
 
     ////////////////////////////////
     //          超音波            //
