@@ -39,7 +39,7 @@ enum RGBLedColors {
     White = 0xFFFFFF
 
 }
-namespace RoboticsWorkshop {
+namespace GigoExt {
 
     ////////////////////////////////
     //          DDM Motor         //
