@@ -79,9 +79,9 @@ namespace GigoExt {
 
         }
     }
-    /**馬達腳位自行宣告
+    /**DDM Module
       */
-    //% blockId=DDMmotor block="speed pin %MSpeedPin|speed (0~255) %MSpeedValue|direction pin %McontrolPin|rotation direction(0~1) %McontrolValue|for %timeMs ms"
+//% blockId=DDMmotor block="speed pin %MSpeedPin|speed (0~255) %MSpeedValue|direction pin %McontrolPin|rotation direction(0~1) %McontrolValue|for ms %timeMs"
 //% McontrolValue.min=0 McontrolValue.max=1 
 //% MSpeedValue.min=0 MSpeedValue.max=255
 //% timeMs.defl=-1 timeMs.min=-1 
@@ -93,7 +93,7 @@ namespace GigoExt {
 //% group="Motor"
 export function DDMmotor(
     MSpeedPin: AnalogPin,
-    MSpeedValue: number=255,
+    MSpeedValue: number = 255,
     McontrolPin: DigitalPin,
     McontrolValue: number,
     timeMs: number = -1  // Default: run indefinitely
