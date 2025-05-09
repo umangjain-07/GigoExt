@@ -81,35 +81,39 @@ namespace GigoExt {
 
         }
     }
-    /**DDM Module
-      */
+/**DDM Module with reliable direction switching */
 //% blockId=DDMmotor block="speed pin %MSpeedPin|speed (0~255) %MSpeedValue|direction pin %McontrolPin|rotation direction(0~1) %McontrolValue|for ms %timeMs"
 //% McontrolValue.min=0 McontrolValue.max=1 
 //% MSpeedValue.min=0 MSpeedValue.max=255
+//% MSpeedValue.defl=255
 //% timeMs.defl=-1 timeMs.min=-1 
-//% timeMs.shadow="timePicker"  // <-- Forces an input field with ms units
+//% timeMs.shadow="timePicker"
 //% MSpeedPin.fieldEditor="gridpicker" MSpeedPin.fieldOptions.columns=5
-//% MSpeedPin.fieldOptions.tooltips="false" MSpeedPin.fieldOptions.width="300"
 //% McontrolPin.fieldEditor="gridpicker" McontrolPin.fieldOptions.columns=5
-//% McontrolPin.fieldOptions.tooltips="false" McontrolPin.fieldOptions.width="300"
 //% group="Motor"
 export function DDMmotor(
     MSpeedPin: AnalogPin,
-    MSpeedValue: number = 255,
+    MSpeedValue: number,
     McontrolPin: DigitalPin,
     McontrolValue: number,
-    timeMs: number = -1  // Default: run indefinitely
-
+    timeMs: number = -1
 ): void {
-    // Set motor speed and direction
+    // Stop any existing motor operation on these pins
+    pins.analogWritePin(MSpeedPin, 0);
+    basic.pause(10); // Brief delay to ensure stop
+    
+    // Set new direction first
+    pins.digitalWritePin(McontrolPin, McontrolValue > 0 ? 1 : 0);
+    basic.pause(10); // Ensure direction change takes effect
+    
+    // Apply speed
     pins.analogWritePin(MSpeedPin, pins.map(MSpeedValue, 0, 255, 0, 1020));
-    pins.digitalWritePin(McontrolPin, McontrolValue);
 
-    // Stop after timeMs if >= 0
+    // Handle timed operation
     if (timeMs >= 0) {
         control.inBackground(() => {
             basic.pause(timeMs);
-            pins.analogWritePin(MSpeedPin, 0); // Stop motor
+            pins.analogWritePin(MSpeedPin, 0);
         });
     }
 }
