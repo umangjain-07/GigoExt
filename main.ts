@@ -47,11 +47,11 @@ namespace GigoExt {
 
 
     /** 
- * Motor channel pin mappings:
+ * Motor channel definitions:
  * E: P16 (speed), P15 (direction)
  * F: P14 (speed), P13 (direction)
- * G: P2 (speed),  P12 (direction)
- * H: P8 (speed),  P1 (direction)
+ * G: P2 (speed), P12 (direction)
+ * H: P8 (speed), P1 (direction)
  */
 //% blockId=DDMmotor2 block="motor channel %channel|speed (0~100) %speed|direction (0~1) %direction"
 //% direction.min=0 direction.max=1 
@@ -61,10 +61,11 @@ namespace GigoExt {
 //% group="Motor"
 export function DDMmotor2(channel: MotorChannel, speed: number, direction: number): void {
     // Validate inputs
-    if (speed < 0 || speed > 100 || direction < 0 || direction > 1) return;
+    speed = Math.constrain(speed, 0, 255);
+    direction = direction > 0 ? 1 : 0;  // Force to 0 or 1
 
     // Map speed from 0-100 to 0-1023 (PWM range)
-    const pwmSpeed = Math.map(speed, 0, 100, 0, 1023);
+    const pwmSpeed = Math.map(speed, 0, 255, 0, 1023);
 
     switch (channel) {
         case MotorChannel.E:
@@ -86,15 +87,14 @@ export function DDMmotor2(channel: MotorChannel, speed: number, direction: numbe
     }
 }
 
-//% enumIdentity="E"
+//% enumMember="E" block="E"
+//% enumMember="F" block="F"
+//% enumMember="G" block="G"
+//% enumMember="H" block="H"
 enum MotorChannel {
-    //% block="E"
     E = 1,
-    //% block="F"
     F = 2,
-    //% block="G"
     G = 3,
-    //% block="H"
     H = 4
 }
     /**DDM Module
