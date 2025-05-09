@@ -47,14 +47,13 @@ namespace GigoExt {
     ////////////////////////////////
 
 
-    /**馬達通道定義註解
-    A(16,15)
+A(16,15)
 B(14,13)
 C(2,12)
 D(8,1)
 I2C(20,19)
 */
-//% blockId=DDMmotor2 block="motor channel %MotorPin|speed (0~255) %MSpeedValue|rotation direction(0~1) %McontrolValue|time (ms) %MTimeValue"
+//% blockId=DDMmotor2 block="motor channel %MotorPin|speed (0~255) %MSpeedValue|direction (0~1) %McontrolValue|time (ms) %MTimeValue"
 //% McontrolValue.min=0 McontrolValue.max=1 
 //% MSpeedValue.min=0 MSpeedValue.max=100
 //% MTimeValue.defl=-1 MTimeValue.min=-1
