@@ -81,12 +81,11 @@ namespace GigoExt {
 
         }
     }
-/**DDM Module with reliable direction switching */
-//% blockId=DDMmotor block="speed pin %MSpeedPin|speed (0~255) %MSpeedValue|direction pin %McontrolPin|rotation direction(0~1) %McontrolValue|for ms %timeMs"
-//% McontrolValue.min=0 McontrolValue.max=1 
+//% blockId=DDMmotor block="speed pin %MSpeedPin|speed (0~255) %MSpeedValue|direction pin %McontrolPin|rotation direction %McontrolValue|for ms %timeMs"
+//% McontrolValue.min=0 McontrolValue.max=1
 //% MSpeedValue.min=0 MSpeedValue.max=255
 //% MSpeedValue.defl=255
-//% timeMs.defl=-1 timeMs.min=-1 
+//% timeMs.defl=-1 timeMs.min=-1
 //% timeMs.shadow="timePicker"
 //% MSpeedPin.fieldEditor="gridpicker" MSpeedPin.fieldOptions.columns=5
 //% McontrolPin.fieldEditor="gridpicker" McontrolPin.fieldOptions.columns=5
@@ -98,22 +97,24 @@ export function DDMmotor(
     McontrolValue: number,
     timeMs: number = -1
 ): void {
-    // Stop any existing motor operation on these pins
+    // Stop the motor briefly before changing direction
     pins.analogWritePin(MSpeedPin, 0);
-    basic.pause(10); // Brief delay to ensure stop
     
-    // Set new direction first
+    // Set direction first (with proper pull-up/pull-down)
+    pins.setPull(McontrolPin, PinPullMode.PullNone);
     pins.digitalWritePin(McontrolPin, McontrolValue > 0 ? 1 : 0);
-    basic.pause(10); // Ensure direction change takes effect
+    control.waitMicros(200); // Short delay for direction to stabilize
     
-    // Apply speed
-    pins.analogWritePin(MSpeedPin, pins.map(MSpeedValue, 0, 255, 0, 1020));
+    // Apply speed with proper PWM range mapping
+    const pwmValue = Math.map(MSpeedValue, 0, 255, 0, 1023);
+    pins.analogWritePin(MSpeedPin, pwmValue);
 
-    // Handle timed operation
+    // Handle timed operation if specified
     if (timeMs >= 0) {
         control.inBackground(() => {
             basic.pause(timeMs);
-            pins.analogWritePin(MSpeedPin, 0);
+            pins.analogWritePin(MSpeedPin, 0); // Stop motor after delay
+            pins.digitalWritePin(McontrolPin, 0); // Reset direction
         });
     }
 }
