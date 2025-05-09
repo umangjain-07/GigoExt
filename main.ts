@@ -93,7 +93,7 @@ namespace GigoExt {
 //% group="Motor"
 export function DDMmotor(
     MSpeedPin: AnalogPin,
-    MSpeedValue: number,
+    MSpeedValue: number=255,
     McontrolPin: DigitalPin,
     McontrolValue: number,
     timeMs: number = -1  // Default: run indefinitely
