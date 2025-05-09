@@ -19,6 +19,7 @@ enum MotorChannel {
     MotorD = 4
 }
 enum RGBLedColors {
+
     //% block=off
     Off = 0x000000,
     //% block=red
@@ -76,6 +77,7 @@ namespace GigoExt {
                 pins.analogWritePin(AnalogPin.P8, pins.map(MSpeedValue, 0, 255, 0, 1000));
                 pins.digitalWritePin(DigitalPin.P1, pins.map(McontrolValue, 0, 1, 0, 1));
                 break;
+            
 
         }
     }
@@ -86,9 +88,9 @@ namespace GigoExt {
 //% MSpeedValue.min=0 MSpeedValue.max=255
 //% timeMs.defl=-1 timeMs.min=-1 
 //% timeMs.shadow="timePicker"  // <-- Forces an input field with ms units
-//% MSpeedPin.fieldEditor="gridpicker" MSpeedPin.fieldOptions.columns=4
+//% MSpeedPin.fieldEditor="gridpicker" MSpeedPin.fieldOptions.columns=5
 //% MSpeedPin.fieldOptions.tooltips="false" MSpeedPin.fieldOptions.width="300"
-//% McontrolPin.fieldEditor="gridpicker" McontrolPin.fieldOptions.columns=4
+//% McontrolPin.fieldEditor="gridpicker" McontrolPin.fieldOptions.columns=5
 //% McontrolPin.fieldOptions.tooltips="false" McontrolPin.fieldOptions.width="300"
 //% group="Motor"
 export function DDMmotor(
@@ -97,6 +99,7 @@ export function DDMmotor(
     McontrolPin: DigitalPin,
     McontrolValue: number,
     timeMs: number = -1  // Default: run indefinitely
+
 ): void {
     // Set motor speed and direction
     pins.analogWritePin(MSpeedPin, pins.map(MSpeedValue, 0, 255, 0, 1020));
