@@ -90,6 +90,7 @@ namespace GigoExt {
 //% timeMs.shadow="timePicker"  // <-- Forces an input field with ms units
 //% MSpeedPin.fieldEditor="gridpicker" MSpeedPin.fieldOptions.columns=5
 //% MSpeedPin.fieldOptions.tooltips="false" MSpeedPin.fieldOptions.width="300"
+//% MSpeedPin.defl=-1
 //% McontrolPin.fieldEditor="gridpicker" McontrolPin.fieldOptions.columns=5
 //% McontrolPin.fieldOptions.tooltips="false" McontrolPin.fieldOptions.width="300"
 //% group="Motor"
