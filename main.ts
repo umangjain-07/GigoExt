@@ -9,13 +9,13 @@ enum PingUnit {
     Inches
 }
 enum MotorChannel {
-    //% block="A"
+    //% block="E"
     MotorA = 1,
-    //% block="B"
+    //% block="F"
     MotorB = 2,
-    //% block="C"
+    //% block="G"
     MotorC = 3,
-    //% block="D"
+    //% block="H"
     MotorD = 4
 }
 enum RGBLedColors {
