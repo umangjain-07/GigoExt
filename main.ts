@@ -53,31 +53,38 @@ C(2,12)
 D(8,1)
 I2C(20,19)
 */
-//% blockId=DDMmotor2 block="motor channel %MotorPin|speed (0~255) %MSpeedValue|direction (0~1) %McontrolValue|time (ms) %MTimeValue"
+//% blockId=DDMmotor2 block="motor channel %MotorPin|speed (0~255) %MSpeedValue|direction (0~1) %McontrolValue|for ms %MTimeValue"
 //% McontrolValue.min=0 McontrolValue.max=1 
 //% MSpeedValue.min=0 MSpeedValue.max=255
 //% MTimeValue.defl=-1 MTimeValue.min=-1
 //% MTimeValue.shadow="timePicker"  // <-- Forces an input field with ms units
+//% MotorPin.fieldEditor="gridpicker" MotorPin.fieldOptions.columns=4
+//% MotorPin.fieldOptions.tooltips="false" MotorPin.fieldOptions.width="300"
 //% group="Motor"
-export function DDMmotor2(MotorPin: MotorChannel, MSpeedValue: number, McontrolValue: number, MTimeValue: number = -1): void {
+export function DDMmotor2(
+    MotorPin: MotorChannel,
+    MSpeedValue: number,
+    McontrolValue: number,
+    MTimeValue: number = -1  // Default: run indefinitely
+): void {
     // Function to control the motor
     const controlMotor = () => {
         switch (MotorPin) {
             case 1:
-                pins.analogWritePin(AnalogPin.P16, pins.map(MSpeedValue, 0, 255, 0, 1000));
-                pins.digitalWritePin(DigitalPin.P15, pins.map(McontrolValue, 0, 1, 0, 1));
+                pins.analogWritePin(AnalogPin.P16, pins.map(MSpeedValue, 0, 255, 0, 1020));
+                pins.digitalWritePin(DigitalPin.P15, McontrolValue);
                 break;
             case 2:
-                pins.analogWritePin(AnalogPin.P14, pins.map(MSpeedValue, 0, 255, 0, 1000));
-                pins.digitalWritePin(DigitalPin.P13, pins.map(McontrolValue, 0, 1, 0, 1));
+                pins.analogWritePin(AnalogPin.P14, pins.map(MSpeedValue, 0, 255, 0, 1020));
+                pins.digitalWritePin(DigitalPin.P13, McontrolValue);
                 break;
             case 3:
-                pins.analogWritePin(AnalogPin.P2, pins.map(MSpeedValue, 0, 255, 0, 1000));
-                pins.digitalWritePin(DigitalPin.P12, pins.map(McontrolValue, 0, 1, 0, 1));
+                pins.analogWritePin(AnalogPin.P2, pins.map(MSpeedValue, 0, 255, 0, 1020));
+                pins.digitalWritePin(DigitalPin.P12, McontrolValue);
                 break;
             case 4:
-                pins.analogWritePin(AnalogPin.P8, pins.map(MSpeedValue, 0, 255, 0, 1000));
-                pins.digitalWritePin(DigitalPin.P1, pins.map(McontrolValue, 0, 1, 0, 1));
+                pins.analogWritePin(AnalogPin.P8, pins.map(MSpeedValue, 0, 255, 0, 1020));
+                pins.digitalWritePin(DigitalPin.P1, McontrolValue);
                 break;
         }
     };
