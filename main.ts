@@ -107,10 +107,8 @@ export function DDMmotor(
 
     // Stop after timeMs if >= 0
     if (timeMs >= 0) {
-        control.inBackground(() => {
-            basic.pause(timeMs);
-            pins.analogWritePin(MSpeedPin, 0); // Stop motor
-        });
+        basic.pause(timeMs);
+        pins.analogWritePin(MSpeedPin, 0); // Stop motor
     }
 }
 
