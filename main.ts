@@ -47,13 +47,13 @@ namespace GigoExt {
 
 
     /**馬達通道定義註解
-    A(1,2)
-    B(8,13)
-    C(14,15)
-    D(16,0)
+    A(16,15)
+    B(14,13)
+    C(2,12)
+    D(8,1)
     I2C(20,19)
     */
-    //% blockId=DDMmotor2 block="motor channel %MotorPin|speed (0~100) %MSpeedValue|rotation direction(0~1) %McontrolValue" blockExternalInputs=false
+    //% blockId=DDMmotor2 block="motor channel %MotorPin|speed (0~255) %MSpeedValue|rotation direction(0~1) %McontrolValue" blockExternalInputs=false
     //% McontrolValue.min=0 McontrolValue.max=1 
     //% MSpeedValue.min=0 MSpeedValue.max=100   
     //% group="Motor"
@@ -61,20 +61,20 @@ namespace GigoExt {
 
         switch (MotorPin) {
             case 1:
-                pins.analogWritePin(AnalogPin.P1, pins.map(MSpeedValue, 0, 100, 0, 1000));
-                pins.digitalWritePin(DigitalPin.P2, pins.map(McontrolValue, 0, 1, 0, 1));
+                pins.analogWritePin(AnalogPin.P16, pins.map(MSpeedValue, 0, 255, 0, 1000));
+                pins.digitalWritePin(DigitalPin.P15, pins.map(McontrolValue, 0, 1, 0, 1));
                 break;
             case 2:
-                pins.analogWritePin(AnalogPin.P8, pins.map(MSpeedValue, 0, 100, 0, 1000));
+                pins.analogWritePin(AnalogPin.P14, pins.map(MSpeedValue, 0, 255, 0, 1000));
                 pins.digitalWritePin(DigitalPin.P13, pins.map(McontrolValue, 0, 1, 0, 1));
                 break;
             case 3:
-                pins.analogWritePin(AnalogPin.P14, pins.map(MSpeedValue, 0, 100, 0, 1000));
-                pins.digitalWritePin(DigitalPin.P15, pins.map(McontrolValue, 0, 1, 0, 1));
+                pins.analogWritePin(AnalogPin.P2, pins.map(MSpeedValue, 0, 255, 0, 1000));
+                pins.digitalWritePin(DigitalPin.P12, pins.map(McontrolValue, 0, 1, 0, 1));
                 break;
             case 4:
-                pins.analogWritePin(AnalogPin.P16, pins.map(MSpeedValue, 0, 100, 0, 1000));
-                pins.digitalWritePin(DigitalPin.P0, pins.map(McontrolValue, 0, 1, 0, 1));
+                pins.analogWritePin(AnalogPin.P8, pins.map(MSpeedValue, 0, 255, 0, 1000));
+                pins.digitalWritePin(DigitalPin.P1, pins.map(McontrolValue, 0, 1, 0, 1));
                 break;
 
         }
