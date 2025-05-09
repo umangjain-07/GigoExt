@@ -47,11 +47,7 @@ namespace GigoExt {
     ////////////////////////////////
 
 
-A(16,15)
-B(14,13)
-C(2,12)
-D(8,1)
-I2C(20,19)
+
 */
 //% blockId=DDMmotor2 block="motor channel %MotorPin|speed (0~255) %MSpeedValue|direction (0~1) %McontrolValue|for ms %MTimeValue"
 //% McontrolValue.min=0 McontrolValue.max=1 
