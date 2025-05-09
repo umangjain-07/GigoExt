@@ -81,40 +81,35 @@ namespace GigoExt {
 
         }
     }
-//% blockId=DDMmotor block="speed pin %MSpeedPin|speed (0~255) %MSpeedValue|direction pin %McontrolPin|rotation direction %McontrolValue|for ms %timeMs"
-//% McontrolValue.min=0 McontrolValue.max=1
+    /**DDM Module
+      */
+//% blockId=DDMmotor block="speed pin %MSpeedPin|speed (0~255) %MSpeedValue|direction pin %McontrolPin|rotation direction(0~1) %McontrolValue|for ms %timeMs"
+//% McontrolValue.min=0 McontrolValue.max=1 
 //% MSpeedValue.min=0 MSpeedValue.max=255
-//% MSpeedValue.defl=255
-//% timeMs.defl=-1 timeMs.min=-1
-//% timeMs.shadow="timePicker"
+//% timeMs.defl=-1 timeMs.min=-1 
+//% timeMs.shadow="timePicker"  // <-- Forces an input field with ms units
 //% MSpeedPin.fieldEditor="gridpicker" MSpeedPin.fieldOptions.columns=5
+//% MSpeedPin.fieldOptions.tooltips="false" MSpeedPin.fieldOptions.width="300"
 //% McontrolPin.fieldEditor="gridpicker" McontrolPin.fieldOptions.columns=5
+//% McontrolPin.fieldOptions.tooltips="false" McontrolPin.fieldOptions.width="300"
 //% group="Motor"
 export function DDMmotor(
     MSpeedPin: AnalogPin,
-    MSpeedValue: number,
+    MSpeedValue: number = 255,
     McontrolPin: DigitalPin,
     McontrolValue: number,
-    timeMs: number = -1
-): void {
-    // Stop the motor briefly before changing direction
-    pins.analogWritePin(MSpeedPin, 0);
-    
-    // Set direction first (with proper pull-up/pull-down)
-    pins.setPull(McontrolPin, PinPullMode.PullNone);
-    pins.digitalWritePin(McontrolPin, McontrolValue > 0 ? 1 : 0);
-    control.waitMicros(200); // Short delay for direction to stabilize
-    
-    // Apply speed with proper PWM range mapping
-    const pwmValue = Math.map(MSpeedValue, 0, 255, 0, 1023);
-    pins.analogWritePin(MSpeedPin, pwmValue);
+    timeMs: number = -1  // Default: run indefinitely
 
-    // Handle timed operation if specified
+): void {
+    // Set motor speed and direction
+    pins.analogWritePin(MSpeedPin, pins.map(MSpeedValue, 0, 255, 0, 1020));
+    pins.digitalWritePin(McontrolPin, McontrolValue);
+
+    // Stop after timeMs if >= 0
     if (timeMs >= 0) {
         control.inBackground(() => {
             basic.pause(timeMs);
-            pins.analogWritePin(MSpeedPin, 0); // Stop motor after delay
-            pins.digitalWritePin(McontrolPin, 0); // Reset direction
+            pins.analogWritePin(MSpeedPin, 0); // Stop motor
         });
     }
 }
