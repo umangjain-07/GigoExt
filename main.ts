@@ -46,57 +46,39 @@ namespace GigoExt {
     ////////////////////////////////
 
 
-    /** 
- * Motor channel definitions:
- * E: P16 (speed), P15 (direction)
- * F: P14 (speed), P13 (direction)
- * G: P2 (speed), P12 (direction)
- * H: P8 (speed), P1 (direction)
- */
-//% blockId=DDMmotor2 block="motor channel %channel|speed (0~100) %speed|direction (0~1) %direction"
-//% direction.min=0 direction.max=1 
-//% speed.min=0 speed.max=100
-//% channel.fieldEditor="gridpicker" channel.fieldOptions.columns=2
-//% channel.fieldOptions.tooltips="false"
-//% group="Motor"
-export function DDMmotor2(channel: MotorChannel, speed: number, direction: number): void {
-    // Validate inputs
-    speed = Math.constrain(speed, 0, 255);
-    direction = direction > 0 ? 1 : 0;  // Force to 0 or 1
+    /**馬達通道定義註解
+    A(1,2)
+    B(8,13)
+    C(14,15)
+    D(16,0)
+    I2C(20,19)
+    */
+    //% blockId=DDMmotor2 block="motor channel %MotorPin|speed (0~100) %MSpeedValue|rotation direction(0~1) %McontrolValue" blockExternalInputs=false
+    //% McontrolValue.min=0 McontrolValue.max=1 
+    //% MSpeedValue.min=0 MSpeedValue.max=100   
+    //% group="Motor"
+    export function DDMmotor2(MotorPin: MotorChannel, MSpeedValue: number, McontrolValue: number): void {
 
-    // Map speed from 0-100 to 0-1023 (PWM range)
-    const pwmSpeed = Math.map(speed, 0, 255, 0, 1023);
+        switch (MotorPin) {
+            case 1:
+                pins.analogWritePin(AnalogPin.P1, pins.map(MSpeedValue, 0, 100, 0, 1000));
+                pins.digitalWritePin(DigitalPin.P2, pins.map(McontrolValue, 0, 1, 0, 1));
+                break;
+            case 2:
+                pins.analogWritePin(AnalogPin.P8, pins.map(MSpeedValue, 0, 100, 0, 1000));
+                pins.digitalWritePin(DigitalPin.P13, pins.map(McontrolValue, 0, 1, 0, 1));
+                break;
+            case 3:
+                pins.analogWritePin(AnalogPin.P14, pins.map(MSpeedValue, 0, 100, 0, 1000));
+                pins.digitalWritePin(DigitalPin.P15, pins.map(McontrolValue, 0, 1, 0, 1));
+                break;
+            case 4:
+                pins.analogWritePin(AnalogPin.P16, pins.map(MSpeedValue, 0, 100, 0, 1000));
+                pins.digitalWritePin(DigitalPin.P0, pins.map(McontrolValue, 0, 1, 0, 1));
+                break;
 
-    switch (channel) {
-        case MotorChannel.E:
-            pins.analogWritePin(AnalogPin.P16, pwmSpeed);
-            pins.digitalWritePin(DigitalPin.P15, direction);
-            break;
-        case MotorChannel.F:
-            pins.analogWritePin(AnalogPin.P14, pwmSpeed);
-            pins.digitalWritePin(DigitalPin.P13, direction);
-            break;
-        case MotorChannel.G:
-            pins.analogWritePin(AnalogPin.P2, pwmSpeed);
-            pins.digitalWritePin(DigitalPin.P12, direction);
-            break;
-        case MotorChannel.H:
-            pins.analogWritePin(AnalogPin.P8, pwmSpeed);
-            pins.digitalWritePin(DigitalPin.P1, direction);
-            break;
+        }
     }
-}
-
-//% enumMember="E" block="E"
-//% enumMember="F" block="F"
-//% enumMember="G" block="G"
-//% enumMember="H" block="H"
-enum MotorChannel {
-    E = 1,
-    F = 2,
-    G = 3,
-    H = 4
-}
     /**DDM Module
       */
 //% blockId=DDMmotor block="speed pin %MSpeedPin|speed (0~255) %MSpeedValue|direction pin %McontrolPin|rotation direction(0~1) %McontrolValue|for ms %timeMs"
