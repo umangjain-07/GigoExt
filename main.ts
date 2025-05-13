@@ -131,7 +131,7 @@ enum RGBLedColors {
     White = 0xFFFFFF
 
 }
-const controlpinDigitalExt = (DigitalPinExt, McontrolValue) => {
+const controlpinDigitalExt = (McontrolPin, McontrolValue) => {
     switch (DigitalPinExt) {
             case 0:
                 pins.digitalWritePin(DigitalPin.P0, McontrolValue);
@@ -201,8 +201,8 @@ const controlpinDigitalExt = (DigitalPinExt, McontrolValue) => {
         
     };
 
-    const controlpinAnalogExt = (AnalogPinExt,MSpeedPin, MSpeedValue) => {
-    switch (AnalogPinExt) {
+    const controlpinAnalogExt = (MSpeedPin, MSpeedValue) => {
+        switch (AnalogPinExt) {
             case 0:
                 pins.analogWritePin(AnalogPin.P0, pins.map(MSpeedValue, 0, 255, 0, 1020));
                 break;
@@ -368,8 +368,8 @@ export function DDMmotor(
     // Set motor speed and direction
     // pins.analogWritePin(MSpeedPin, pins.map(MSpeedValue, 0, 255, 0, 1020));
     // pins.digitalWritePin(McontrolPin, McontrolValue);
-    controlpinDigitalExt(DigitalPinExt,McontrolValue);
-    controlpinAnalogExt(AnalogPinExt,MSpeedPin,MSpeedValue)
+    controlpinDigitalExt(McontrolPin,McontrolValue);
+    controlpinAnalogExt(MSpeedPin,MSpeedValue)
     
 
     // Stop after timeMs if >= 0
