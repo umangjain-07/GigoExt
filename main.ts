@@ -63,7 +63,7 @@ enum DigitalPinExt {
     CaseT = 20
 }
 
-enum AnalogPinPinExt {
+enum AnalogPinExt {
     //% block="P0"
     CaseZ = 0,
     //% block="P1"
@@ -219,7 +219,7 @@ export function DDMmotor2(
 //% McontrolPin.fieldOptions.tooltips="false" McontrolPin.fieldOptions.width="300"
 //% group="Motor"
 export function DDMmotor(
-    MSpeedPin: AnalogPin,
+    MSpeedPin: AnalogPinExt,
     MSpeedValue: number = 255,
     McontrolPin: DigitalPinExt,
     McontrolValue: number,
