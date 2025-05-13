@@ -131,145 +131,142 @@ enum RGBLedColors {
     White = 0xFFFFFF
 
 }
-const controlpinDigitalExt = (controlPin, McontrolValue) => {
+const controlpinDigitalExt = (controlPin: DigitalPinExt, McontrolValue: number) => {
     switch (controlPin) {
-            case 0:
-                pins.digitalWritePin(DigitalPin.P0, McontrolValue);
-                break;
-            case 1:
-                pins.digitalWritePin(DigitalPin.P1, McontrolValue);
-                break;
-            case 2:
-                pins.digitalWritePin(DigitalPin.P2, McontrolValue);
-                break;
-            case 3:
-                pins.digitalWritePin(DigitalPin.P3, McontrolValue);
-                break;
-            case 4:
-                pins.digitalWritePin(DigitalPin.P4, McontrolValue);
-                break;
-            case 5:
-                pins.digitalWritePin(DigitalPin.P5, McontrolValue);
-                break;
-            case 6:
-                pins.digitalWritePin(DigitalPin.P6, McontrolValue);
-                break;
-            case 7:
-                pins.digitalWritePin(DigitalPin.P7, McontrolValue);
-                break;
-            case 8:
-                pins.digitalWritePin(DigitalPin.P8, McontrolValue);
-                break;
-            case 9:
-                pins.digitalWritePin(DigitalPin.P9, McontrolValue);
-                break;
-            case 10:
-                pins.digitalWritePin(DigitalPin.P10, McontrolValue);
-                break;
-            case 11:
-                pins.digitalWritePin(DigitalPin.P11, McontrolValue);
-                break;
-            case 12:
-                pins.digitalWritePin(DigitalPin.P12, McontrolValue);
-                break;
-            case 13:
-                pins.digitalWritePin(DigitalPin.P13, McontrolValue);
-                break;
-            case 14:
-                pins.digitalWritePin(DigitalPin.P14, McontrolValue);
-                break;
-            case 15:
-                pins.digitalWritePin(DigitalPin.P15, McontrolValue);
-                break;
-            case 16:
-                pins.digitalWritePin(DigitalPin.P16, McontrolValue);
-                break;
-            case 17:
-                pins.digitalWritePin(DigitalPin.P17, McontrolValue);
-                break;
-            case 18:
-                pins.digitalWritePin(DigitalPin.P18, McontrolValue);
-                break;
-            case 19:
-                pins.digitalWritePin(DigitalPin.P19, McontrolValue);
-                break;
-            case 20:
-                pins.digitalWritePin(DigitalPin.P20, McontrolValue);
-                break;
-            
-        }
-        
-    };
+        case DigitalPinExt.CaseZ:
+            pins.digitalWritePin(DigitalPin.P0, McontrolValue);
+            break;
+        case DigitalPinExt.CaseA:
+            pins.digitalWritePin(DigitalPin.P1, McontrolValue);
+            break;
+        case DigitalPinExt.CaseB:
+            pins.digitalWritePin(DigitalPin.P2, McontrolValue);
+            break;
+        case DigitalPinExt.CaseC:
+            pins.digitalWritePin(DigitalPin.P3, McontrolValue);
+            break;
+        case DigitalPinExt.CaseD:
+            pins.digitalWritePin(DigitalPin.P4, McontrolValue);
+            break;
+        case DigitalPinExt.CaseE:
+            pins.digitalWritePin(DigitalPin.P5, McontrolValue);
+            break;
+        case DigitalPinExt.CaseF:
+            pins.digitalWritePin(DigitalPin.P6, McontrolValue);
+            break;
+        case DigitalPinExt.CaseG:
+            pins.digitalWritePin(DigitalPin.P7, McontrolValue);
+            break;
+        case DigitalPinExt.CaseH:
+            pins.digitalWritePin(DigitalPin.P8, McontrolValue);
+            break;
+        case DigitalPinExt.CaseI:
+            pins.digitalWritePin(DigitalPin.P9, McontrolValue);
+            break;
+        case DigitalPinExt.CaseJ:
+            pins.digitalWritePin(DigitalPin.P10, McontrolValue);
+            break;
+        case DigitalPinExt.CaseK:
+            pins.digitalWritePin(DigitalPin.P11, McontrolValue);
+            break;
+        case DigitalPinExt.CaseL:
+            pins.digitalWritePin(DigitalPin.P12, McontrolValue);
+            break;
+        case DigitalPinExt.CaseM:
+            pins.digitalWritePin(DigitalPin.P13, McontrolValue);
+            break;
+        case DigitalPinExt.CaseN:
+            pins.digitalWritePin(DigitalPin.P14, McontrolValue);
+            break;
+        case DigitalPinExt.CaseO:
+            pins.digitalWritePin(DigitalPin.P15, McontrolValue);
+            break;
+        case DigitalPinExt.CaseP:
+            pins.digitalWritePin(DigitalPin.P16, McontrolValue);
+            break;
+        case DigitalPinExt.CaseQ:
+            pins.digitalWritePin(DigitalPin.P17, McontrolValue);
+            break;
+        case DigitalPinExt.CaseR:
+            pins.digitalWritePin(DigitalPin.P18, McontrolValue);
+            break;
+        case DigitalPinExt.CaseS:
+            pins.digitalWritePin(DigitalPin.P19, McontrolValue);
+            break;
+        case DigitalPinExt.CaseT:
+            pins.digitalWritePin(DigitalPin.P20, McontrolValue);
+            break;
+    }
+};
 
-    const controlpinAnalogExt = (SpeedPin, MSpeedValue) => {
-        switch (SpeedPin) {
-            case 0:
-                pins.analogWritePin(AnalogPin.P0, pins.map(MSpeedValue, 0, 255, 0, 1020));
-                break;
-            case 1:
-                pins.analogWritePin(AnalogPin.P1, pins.map(MSpeedValue, 0, 255, 0, 1020));
-                break;
-            case 2:
-                pins.analogWritePin(AnalogPin.P2, pins.map(MSpeedValue, 0, 255, 0, 1020));
-                break;
-            case 3:
-                pins.analogWritePin(AnalogPin.P3, pins.map(MSpeedValue, 0, 255, 0, 1020));
-                break;
-            case 4:
-                pins.analogWritePin(AnalogPin.P4, pins.map(MSpeedValue, 0, 255, 0, 1020));
-                break;
-            case 5:
-                pins.analogWritePin(AnalogPin.P5, pins.map(MSpeedValue, 0, 255, 0, 1020));
-                break;
-            case 6:
-                pins.analogWritePin(AnalogPin.P6, pins.map(MSpeedValue, 0, 255, 0, 1020));
-                break;
-            case 7:
-                pins.analogWritePin(AnalogPin.P7, pins.map(MSpeedValue, 0, 255, 0, 1020));
-                break;
-            case 8:
-                pins.analogWritePin(AnalogPin.P8, pins.map(MSpeedValue, 0, 255, 0, 1020));
-                break;
-            case 9:
-                pins.analogWritePin(AnalogPin.P9, pins.map(MSpeedValue, 0, 255, 0, 1020));
-                break;
-            case 10:
-                pins.analogWritePin(AnalogPin.P10, pins.map(MSpeedValue, 0, 255, 0, 1020));
-                break;
-            case 11:
-                pins.analogWritePin(AnalogPin.P11, pins.map(MSpeedValue, 0, 255, 0, 1020));
-                break;
-            case 12:
-                pins.analogWritePin(AnalogPin.P12, pins.map(MSpeedValue, 0, 255, 0, 1020));
-                break;
-            case 13:
-                pins.analogWritePin(AnalogPin.P13, pins.map(MSpeedValue, 0, 255, 0, 1020));
-                break;
-            case 14:
-                pins.analogWritePin(AnalogPin.P14, pins.map(MSpeedValue, 0, 255, 0, 1020));
-                break;
-            case 15:
-                pins.analogWritePin(AnalogPin.P15, pins.map(MSpeedValue, 0, 255, 0, 1020));
-                break;
-            case 16:
-                pins.analogWritePin(AnalogPin.P16, pins.map(MSpeedValue, 0, 255, 0, 1020));
-                break;
-            case 17:
-                pins.analogWritePin(AnalogPin.P17, pins.map(MSpeedValue, 0, 255, 0, 1020));
-                break;
-            case 18:
-                pins.analogWritePin(AnalogPin.P18, pins.map(MSpeedValue, 0, 255, 0, 1020));
-                break;
-            case 19:
-                pins.analogWritePin(AnalogPin.P19, pins.map(MSpeedValue, 0, 255, 0, 1020));
-                break;
-            case 20:
-                pins.analogWritePin(AnalogPin.P20, pins.map(MSpeedValue, 0, 255, 0, 1020));
-                break;
-            
-        }
-        
-    };
+const controlpinAnalogExt = (SpeedPin: AnalogPinExt, MSpeedValue: number) => {
+    switch (SpeedPin) {
+        case AnalogPinExt.CaseZ:
+            pins.analogWritePin(AnalogPin.P0, pins.map(MSpeedValue, 0, 255, 0, 1020));
+            break;
+        case AnalogPinExt.CaseA:
+            pins.analogWritePin(AnalogPin.P1, pins.map(MSpeedValue, 0, 255, 0, 1020));
+            break;
+        case AnalogPinExt.CaseB:
+            pins.analogWritePin(AnalogPin.P2, pins.map(MSpeedValue, 0, 255, 0, 1020));
+            break;
+        case AnalogPinExt.CaseC:
+            pins.analogWritePin(AnalogPin.P3, pins.map(MSpeedValue, 0, 255, 0, 1020));
+            break;
+        case AnalogPinExt.CaseD:
+            pins.analogWritePin(AnalogPin.P4, pins.map(MSpeedValue, 0, 255, 0, 1020));
+            break;
+        case AnalogPinExt.CaseE:
+            pins.analogWritePin(AnalogPin.P5, pins.map(MSpeedValue, 0, 255, 0, 1020));
+            break;
+        case AnalogPinExt.CaseF:
+            pins.analogWritePin(AnalogPin.P6, pins.map(MSpeedValue, 0, 255, 0, 1020));
+            break;
+        case AnalogPinExt.CaseG:
+            pins.analogWritePin(AnalogPin.P7, pins.map(MSpeedValue, 0, 255, 0, 1020));
+            break;
+        case AnalogPinExt.CaseH:
+            pins.analogWritePin(AnalogPin.P8, pins.map(MSpeedValue, 0, 255, 0, 1020));
+            break;
+        case AnalogPinExt.CaseI:
+            pins.analogWritePin(AnalogPin.P9, pins.map(MSpeedValue, 0, 255, 0, 1020));
+            break;
+        case AnalogPinExt.CaseJ:
+            pins.analogWritePin(AnalogPin.P10, pins.map(MSpeedValue, 0, 255, 0, 1020));
+            break;
+        case AnalogPinExt.CaseK:
+            pins.analogWritePin(AnalogPin.P11, pins.map(MSpeedValue, 0, 255, 0, 1020));
+            break;
+        case AnalogPinExt.CaseL:
+            pins.analogWritePin(AnalogPin.P12, pins.map(MSpeedValue, 0, 255, 0, 1020));
+            break;
+        case AnalogPinExt.CaseM:
+            pins.analogWritePin(AnalogPin.P13, pins.map(MSpeedValue, 0, 255, 0, 1020));
+            break;
+        case AnalogPinExt.CaseN:
+            pins.analogWritePin(AnalogPin.P14, pins.map(MSpeedValue, 0, 255, 0, 1020));
+            break;
+        case AnalogPinExt.CaseO:
+            pins.analogWritePin(AnalogPin.P15, pins.map(MSpeedValue, 0, 255, 0, 1020));
+            break;
+        case AnalogPinExt.CaseP:
+            pins.analogWritePin(AnalogPin.P16, pins.map(MSpeedValue, 0, 255, 0, 1020));
+            break;
+        case AnalogPinExt.CaseQ:
+            pins.analogWritePin(AnalogPin.P17, pins.map(MSpeedValue, 0, 255, 0, 1020));
+            break;
+        case AnalogPinExt.CaseR:
+            pins.analogWritePin(AnalogPin.P18, pins.map(MSpeedValue, 0, 255, 0, 1020));
+            break;
+        case AnalogPinExt.CaseS:
+            pins.analogWritePin(AnalogPin.P19, pins.map(MSpeedValue, 0, 255, 0, 1020));
+            break;
+        case AnalogPinExt.CaseT:
+            pins.analogWritePin(AnalogPin.P20, pins.map(MSpeedValue, 0, 255, 0, 1020));
+            break;
+    }
+};
+
 namespace GigoExt {
 
     ////////////////////////////////
