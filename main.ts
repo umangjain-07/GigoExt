@@ -226,7 +226,7 @@ export function DDMmotor(
     MSpeedValue: number = 255,
     McontrolPin: DigitalPinExt,
     McontrolValue: number,
-    timeMs: number = -1  // Default: run indefinitely
+    timeMs: number = -1,  // Default: run indefinitely
 
     McontrolValue = controlpinExt(DigitalPinExt)
 
