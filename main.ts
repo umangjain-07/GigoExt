@@ -132,7 +132,7 @@ enum RGBLedColors {
 
 }
 const controlpinDigitalExt = (McontrolPin, McontrolValue) => {
-    switch (DigitalPinExt) {
+    switch (McontrolPin) {
             case 0:
                 pins.digitalWritePin(DigitalPin.P0, McontrolValue);
                 break;
@@ -202,7 +202,7 @@ const controlpinDigitalExt = (McontrolPin, McontrolValue) => {
     };
 
     const controlpinAnalogExt = (MSpeedPin, MSpeedValue) => {
-        switch (AnalogPinExt) {
+        switch (MSpeedPin) {
             case 0:
                 pins.analogWritePin(AnalogPin.P0, pins.map(MSpeedValue, 0, 255, 0, 1020));
                 break;
