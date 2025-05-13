@@ -366,9 +366,10 @@ export function DDMmotor(
 
 ): void {
     // Set motor speed and direction
-    pins.analogWritePin(MSpeedPin, pins.map(MSpeedValue, 0, 255, 0, 1020));
+    // pins.analogWritePin(MSpeedPin, pins.map(MSpeedValue, 0, 255, 0, 1020));
     // pins.digitalWritePin(McontrolPin, McontrolValue);
     controlpinDigitalExt(DigitalPinExt,McontrolValue);
+    controlpinAnalogExt(AnalogPinExt,MSpeedPin,MSpeedValue)
     
 
     // Stop after timeMs if >= 0
