@@ -18,6 +18,49 @@ enum MotorChannel {
     //% block="H"
     MotorD = 4
 }
+enum DigitalPinExt {
+    //% block="P1"
+    CaseA = 1,
+    //% block="P2"
+    CaseB = 2,
+    //% block="P3"
+    CaseC = 3,
+    //% block="P4"
+    CaseD = 4,
+    //% block="P5"
+    CaseE = 5,
+    //% block="P6"
+    CaseF = 6,
+    //% block="P7"
+    CaseG = 7,
+    //% block="P8"
+    CaseH = 8,
+    //% block="P9"
+    CaseI = 9,
+    //% block="P10"
+    CaseJ = 10,
+    //% block="P11"
+    CaseK = 11,
+    //% block="P12"
+    CaseL = 12,
+    //% block="P13"
+    CaseM = 13,
+    //% block="P14"
+    CaseN = 14,
+    //% block="P15"
+    CaseO = 15,
+    //% block="P16"
+    CaseP = 16,
+    //% block="P17"
+    CaseQ = 17,
+    //% block="P18"
+    CaseR = 18,
+    //% block="P19"
+    CaseS = 19,
+    //% block="P20"
+    CaseT = 20
+}
+
 enum RGBLedColors {
 
     //% block=off
@@ -130,7 +173,7 @@ export function DDMmotor2(
 export function DDMmotor(
     MSpeedPin: AnalogPin,
     MSpeedValue: number = 255,
-    McontrolPin: DigitalPin,
+    McontrolPin: DigitalPinExt,
     McontrolValue: number,
     timeMs: number = -1  // Default: run indefinitely
 
