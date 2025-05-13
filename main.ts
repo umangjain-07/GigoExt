@@ -228,7 +228,7 @@ export function DDMmotor(
     McontrolValue: number,
     timeMs: number = -1  // Default: run indefinitely
 
-    McontrolValue = controlpinExt()
+    McontrolValue = controlpinExt(DigitalPinExt)
 
 
 
