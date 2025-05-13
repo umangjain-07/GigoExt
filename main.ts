@@ -131,6 +131,9 @@ enum RGBLedColors {
     White = 0xFFFFFF
 
 }
+const controlpinExt = (DigitalPinExt) => {
+        return DigitalPinExt
+    };
 namespace GigoExt {
 
     ////////////////////////////////
@@ -224,6 +227,11 @@ export function DDMmotor(
     McontrolPin: DigitalPinExt,
     McontrolValue: number,
     timeMs: number = -1  // Default: run indefinitely
+
+    McontrolValue = controlpinExt()
+
+
+
 
 ): void {
     // Set motor speed and direction
