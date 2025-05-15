@@ -8,6 +8,7 @@ enum PingUnit {
     //% block="inches"
     Inches
 }
+
 enum MotorChannel {
     //% block="E"
     MotorA = 1,
@@ -18,6 +19,7 @@ enum MotorChannel {
     //% block="H"
     MotorD = 4
 }
+
 enum DigitalPinExt {
     //% block="P0"
     CaseZ = 0,
@@ -108,9 +110,7 @@ enum AnalogPinExt {
     CaseT = 20
 }
 
-
 enum RGBLedColors {
-
     //% block=off
     Off = 0x000000,
     //% block=red
@@ -129,142 +129,64 @@ enum RGBLedColors {
     Purple = 0xFF00FF,
     //% block=white
     White = 0xFFFFFF
-
 }
+
+const digitalPinMap: { [key in DigitalPinExt]: DigitalPin } = {
+    [DigitalPinExt.CaseZ]: DigitalPin.P0,
+    [DigitalPinExt.CaseA]: DigitalPin.P1,
+    [DigitalPinExt.CaseB]: DigitalPin.P2,
+    [DigitalPinExt.CaseC]: DigitalPin.P3,
+    [DigitalPinExt.CaseD]: DigitalPin.P4,
+    [DigitalPinExt.CaseE]: DigitalPin.P5,
+    [DigitalPinExt.CaseF]: DigitalPin.P6,
+    [DigitalPinExt.CaseG]: DigitalPin.P7,
+    [DigitalPinExt.CaseH]: DigitalPin.P8,
+    [DigitalPinExt.CaseI]: DigitalPin.P9,
+    [DigitalPinExt.CaseJ]: DigitalPin.P10,
+    [DigitalPinExt.CaseK]: DigitalPin.P11,
+    [DigitalPinExt.CaseL]: DigitalPin.P12,
+    [DigitalPinExt.CaseM]: DigitalPin.P13,
+    [DigitalPinExt.CaseN]: DigitalPin.P14,
+    [DigitalPinExt.CaseO]: DigitalPin.P15,
+    [DigitalPinExt.CaseP]: DigitalPin.P16,
+    [DigitalPinExt.CaseQ]: DigitalPin.P17,
+    [DigitalPinExt.CaseR]: DigitalPin.P18,
+    [DigitalPinExt.CaseS]: DigitalPin.P19,
+    [DigitalPinExt.CaseT]: DigitalPin.P20,
+};
+
+const analogPinMap: { [key in AnalogPinExt]: AnalogPin } = {
+    [AnalogPinExt.CaseZ]: AnalogPin.P0,
+    [AnalogPinExt.CaseA]: AnalogPin.P1,
+    [AnalogPinExt.CaseB]: AnalogPin.P2,
+    [AnalogPinExt.CaseC]: AnalogPin.P3,
+    [AnalogPinExt.CaseD]: AnalogPin.P4,
+    [AnalogPinExt.CaseE]: AnalogPin.P5,
+    [AnalogPinExt.CaseF]: AnalogPin.P6,
+    [AnalogPinExt.CaseG]: AnalogPin.P7,
+    [AnalogPinExt.CaseH]: AnalogPin.P8,
+    [AnalogPinExt.CaseI]: AnalogPin.P9,
+    [AnalogPinExt.CaseJ]: AnalogPin.P10,
+    [AnalogPinExt.CaseK]: AnalogPin.P11,
+    [AnalogPinExt.CaseL]: AnalogPin.P12,
+    [AnalogPinExt.CaseM]: AnalogPin.P13,
+    [AnalogPinExt.CaseN]: AnalogPin.P14,
+    [AnalogPinExt.CaseO]: AnalogPin.P15,
+    [AnalogPinExt.CaseP]: AnalogPin.P16,
+    [AnalogPinExt.CaseQ]: AnalogPin.P17,
+    [AnalogPinExt.CaseR]: AnalogPin.P18,
+    [AnalogPinExt.CaseS]: AnalogPin.P19,
+    [AnalogPinExt.CaseT]: AnalogPin.P20,
+};
+
 const controlpinDigitalExt = (controlPin: DigitalPinExt, McontrolValue: number) => {
-    switch (controlPin) {
-        case DigitalPinExt.CaseZ:
-            pins.digitalWritePin(DigitalPin.P0, McontrolValue);
-            break;
-        case DigitalPinExt.CaseA:
-            pins.digitalWritePin(DigitalPin.P1, McontrolValue);
-            break;
-        case DigitalPinExt.CaseB:
-            pins.digitalWritePin(DigitalPin.P2, McontrolValue);
-            break;
-        case DigitalPinExt.CaseC:
-            pins.digitalWritePin(DigitalPin.P3, McontrolValue);
-            break;
-        case DigitalPinExt.CaseD:
-            pins.digitalWritePin(DigitalPin.P4, McontrolValue);
-            break;
-        case DigitalPinExt.CaseE:
-            pins.digitalWritePin(DigitalPin.P5, McontrolValue);
-            break;
-        case DigitalPinExt.CaseF:
-            pins.digitalWritePin(DigitalPin.P6, McontrolValue);
-            break;
-        case DigitalPinExt.CaseG:
-            pins.digitalWritePin(DigitalPin.P7, McontrolValue);
-            break;
-        case DigitalPinExt.CaseH:
-            pins.digitalWritePin(DigitalPin.P8, McontrolValue);
-            break;
-        case DigitalPinExt.CaseI:
-            pins.digitalWritePin(DigitalPin.P9, McontrolValue);
-            break;
-        case DigitalPinExt.CaseJ:
-            pins.digitalWritePin(DigitalPin.P10, McontrolValue);
-            break;
-        case DigitalPinExt.CaseK:
-            pins.digitalWritePin(DigitalPin.P11, McontrolValue);
-            break;
-        case DigitalPinExt.CaseL:
-            pins.digitalWritePin(DigitalPin.P12, McontrolValue);
-            break;
-        case DigitalPinExt.CaseM:
-            pins.digitalWritePin(DigitalPin.P13, McontrolValue);
-            break;
-        case DigitalPinExt.CaseN:
-            pins.digitalWritePin(DigitalPin.P14, McontrolValue);
-            break;
-        case DigitalPinExt.CaseO:
-            pins.digitalWritePin(DigitalPin.P15, McontrolValue);
-            break;
-        case DigitalPinExt.CaseP:
-            pins.digitalWritePin(DigitalPin.P16, McontrolValue);
-            break;
-        case DigitalPinExt.CaseQ:
-            pins.digitalWritePin(DigitalPin.P17, McontrolValue);
-            break;
-        case DigitalPinExt.CaseR:
-            pins.digitalWritePin(DigitalPin.P18, McontrolValue);
-            break;
-        case DigitalPinExt.CaseS:
-            pins.digitalWritePin(DigitalPin.P19, McontrolValue);
-            break;
-        case DigitalPinExt.CaseT:
-            pins.digitalWritePin(DigitalPin.P20, McontrolValue);
-            break;
-    }
+    const pin = digitalPinMap[controlPin];
+    pins.digitalWritePin(pin, McontrolValue);
 };
 
 const controlpinAnalogExt = (SpeedPin: AnalogPinExt, MSpeedValue: number) => {
-    switch (SpeedPin) {
-        case AnalogPinExt.CaseZ:
-            pins.analogWritePin(AnalogPin.P0, pins.map(MSpeedValue, 0, 255, 0, 1020));
-            break;
-        case AnalogPinExt.CaseA:
-            pins.analogWritePin(AnalogPin.P1, pins.map(MSpeedValue, 0, 255, 0, 1020));
-            break;
-        case AnalogPinExt.CaseB:
-            pins.analogWritePin(AnalogPin.P2, pins.map(MSpeedValue, 0, 255, 0, 1020));
-            break;
-        case AnalogPinExt.CaseC:
-            pins.analogWritePin(AnalogPin.P3, pins.map(MSpeedValue, 0, 255, 0, 1020));
-            break;
-        case AnalogPinExt.CaseD:
-            pins.analogWritePin(AnalogPin.P4, pins.map(MSpeedValue, 0, 255, 0, 1020));
-            break;
-        case AnalogPinExt.CaseE:
-            pins.analogWritePin(AnalogPin.P5, pins.map(MSpeedValue, 0, 255, 0, 1020));
-            break;
-        case AnalogPinExt.CaseF:
-            pins.analogWritePin(AnalogPin.P6, pins.map(MSpeedValue, 0, 255, 0, 1020));
-            break;
-        case AnalogPinExt.CaseG:
-            pins.analogWritePin(AnalogPin.P7, pins.map(MSpeedValue, 0, 255, 0, 1020));
-            break;
-        case AnalogPinExt.CaseH:
-            pins.analogWritePin(AnalogPin.P8, pins.map(MSpeedValue, 0, 255, 0, 1020));
-            break;
-        case AnalogPinExt.CaseI:
-            pins.analogWritePin(AnalogPin.P9, pins.map(MSpeedValue, 0, 255, 0, 1020));
-            break;
-        case AnalogPinExt.CaseJ:
-            pins.analogWritePin(AnalogPin.P10, pins.map(MSpeedValue, 0, 255, 0, 1020));
-            break;
-        case AnalogPinExt.CaseK:
-            pins.analogWritePin(AnalogPin.P11, pins.map(MSpeedValue, 0, 255, 0, 1020));
-            break;
-        case AnalogPinExt.CaseL:
-            pins.analogWritePin(AnalogPin.P12, pins.map(MSpeedValue, 0, 255, 0, 1020));
-            break;
-        case AnalogPinExt.CaseM:
-            pins.analogWritePin(AnalogPin.P13, pins.map(MSpeedValue, 0, 255, 0, 1020));
-            break;
-        case AnalogPinExt.CaseN:
-            pins.analogWritePin(AnalogPin.P14, pins.map(MSpeedValue, 0, 255, 0, 1020));
-            break;
-        case AnalogPinExt.CaseO:
-            pins.analogWritePin(AnalogPin.P15, pins.map(MSpeedValue, 0, 255, 0, 1020));
-            break;
-        case AnalogPinExt.CaseP:
-            pins.analogWritePin(AnalogPin.P16, pins.map(MSpeedValue, 0, 255, 0, 1020));
-            break;
-        case AnalogPinExt.CaseQ:
-            pins.analogWritePin(AnalogPin.P17, pins.map(MSpeedValue, 0, 255, 0, 1020));
-            break;
-        case AnalogPinExt.CaseR:
-            pins.analogWritePin(AnalogPin.P18, pins.map(MSpeedValue, 0, 255, 0, 1020));
-            break;
-        case AnalogPinExt.CaseS:
-            pins.analogWritePin(AnalogPin.P19, pins.map(MSpeedValue, 0, 255, 0, 1020));
-            break;
-        case AnalogPinExt.CaseT:
-            pins.analogWritePin(AnalogPin.P20, pins.map(MSpeedValue, 0, 255, 0, 1020));
-            break;
-    }
+    const pin = analogPinMap[SpeedPin];
+    pins.analogWritePin(pin, pins.map(MSpeedValue, 0, 255, 0, 1020));
 };
 
 namespace GigoExt {
@@ -273,154 +195,104 @@ namespace GigoExt {
     //          DDM Motor         //
     ////////////////////////////////
 
+    /**DDM DDM
+    */
+    //% blockId=DDMmotor2 block="motor channel %MotorPin|speed (0~255) %MSpeedValue|direction (0~1) %McontrolValue|for ms %MTimeValue"
+    //% McontrolValue.min=0 McontrolValue.max=1 
+    //% MSpeedValue.min=0 MSpeedValue.max=255
+    //% MTimeValue.defl=-1 MTimeValue.min=-1
+    //% MTimeValue.shadow="timePicker"  // <-- Forces an input field with ms units
+    //% MotorPin.fieldEditor="gridpicker" MotorPin.fieldOptions.columns=4
+    //% MotorPin.fieldOptions.tooltips="false" MotorPin.fieldOptions.width="300"
+    //% group="Motor"
+    export function DDMmotor2(
+        MotorPin: MotorChannel,
+        MSpeedValue: number,
+        McontrolValue: number,
+        MTimeValue: number = -1  // Default: run indefinitely
+    ): void {
+        // Function to control the motor
+        const controlMotor = () => {
+            switch (MotorPin) {
+                case 1:
+                    pins.analogWritePin(AnalogPin.P16, pins.map(MSpeedValue, 0, 255, 0, 1020));
+                    pins.digitalWritePin(DigitalPin.P15, McontrolValue);
+                    break;
+                case 2:
+                    pins.analogWritePin(AnalogPin.P14, pins.map(MSpeedValue, 0, 255, 0, 1020));
+                    pins.digitalWritePin(DigitalPin.P13, McontrolValue);
+                    break;
+                case 3:
+                    pins.analogWritePin(AnalogPin.P2, pins.map(MSpeedValue, 0, 255, 0, 1020));
+                    pins.digitalWritePin(DigitalPin.P12, McontrolValue);
+                    break;
+                case 4:
+                    pins.analogWritePin(AnalogPin.P8, pins.map(MSpeedValue, 0, 255, 0, 1020));
+                    pins.digitalWritePin(DigitalPin.P1, McontrolValue);
+                    break;
+            }
+        };
 
-/**DDM DDM
-*/
-//% blockId=DDMmotor2 block="motor channel %MotorPin|speed (0~255) %MSpeedValue|direction (0~1) %McontrolValue|for ms %MTimeValue"
-//% McontrolValue.min=0 McontrolValue.max=1 
-//% MSpeedValue.min=0 MSpeedValue.max=255
-//% MTimeValue.defl=-1 MTimeValue.min=-1
-//% MTimeValue.shadow="timePicker"  // <-- Forces an input field with ms units
-//% MotorPin.fieldEditor="gridpicker" MotorPin.fieldOptions.columns=4
-//% MotorPin.fieldOptions.tooltips="false" MotorPin.fieldOptions.width="300"
-//% group="Motor"
-export function DDMmotor2(
-    MotorPin: MotorChannel,
-    MSpeedValue: number,
-    McontrolValue: number,
-    MTimeValue: number = -1  // Default: run indefinitely
-): void {
-    // Function to control the motor
-    const controlMotor = () => {
-        switch (MotorPin) {
-            case 1:
-                pins.analogWritePin(AnalogPin.P16, pins.map(MSpeedValue, 0, 255, 0, 1020));
-                pins.digitalWritePin(DigitalPin.P15, McontrolValue);
-                break;
-            case 2:
-                pins.analogWritePin(AnalogPin.P14, pins.map(MSpeedValue, 0, 255, 0, 1020));
-                pins.digitalWritePin(DigitalPin.P13, McontrolValue);
-                break;
-            case 3:
-                pins.analogWritePin(AnalogPin.P2, pins.map(MSpeedValue, 0, 255, 0, 1020));
-                pins.digitalWritePin(DigitalPin.P12, McontrolValue);
-                break;
-            case 4:
-                pins.analogWritePin(AnalogPin.P8, pins.map(MSpeedValue, 0, 255, 0, 1020));
-                pins.digitalWritePin(DigitalPin.P1, McontrolValue);
-                break;
+        // Function to stop the motor
+        const stopMotor = () => {
+            switch (MotorPin) {
+                case 1:
+                    pins.analogWritePin(AnalogPin.P16, 0);
+                    break;
+                case 2:
+                    pins.analogWritePin(AnalogPin.P14, 0);
+                    break;
+                case 3:
+                    pins.analogWritePin(AnalogPin.P2, 0);
+                    break;
+                case 4:
+                    pins.analogWritePin(AnalogPin.P8, 0);
+                    break;
+            }
+        };
+
+        // Control the motor based on time parameter
+        if (MTimeValue <= 0) {
+            // Run indefinitely if time is -1 or 0
+            controlMotor();
+        } else {
+            // Run for specified time then stop
+            controlMotor();
+            basic.pause(MTimeValue);
+            stopMotor();
         }
-    };
-
-    // Function to stop the motor
-    const stopMotor = () => {
-        switch (MotorPin) {
-            case 1:
-                pins.analogWritePin(AnalogPin.P16, 0);
-                break;
-            case 2:
-                pins.analogWritePin(AnalogPin.P14, 0);
-                break;
-            case 3:
-                pins.analogWritePin(AnalogPin.P2, 0);
-                break;
-            case 4:
-                pins.analogWritePin(AnalogPin.P8, 0);
-                break;
-        }
-    };
-
-    // Control the motor based on time parameter
-    if (MTimeValue <= 0) {
-        // Run indefinitely if time is -1 or 0
-        controlMotor();
-    } else {
-        // Run for specified time then stop
-        controlMotor();
-        basic.pause(MTimeValue);
-        stopMotor();
     }
-}
+
     /**DDM Module
       */
-//% blockId=DDMmotor block="speed pin %MSpeedPin|speed (0~255) %MSpeedValue|direction pin %McontrolPin|rotation direction(0~1) %McontrolValue|for ms %timeMs"
-//% McontrolValue.min=0 McontrolValue.max=1 
-//% MSpeedValue.min=0 MSpeedValue.max=255
-//% timeMs.defl=-1 timeMs.min=-1 
-//% timeMs.shadow="timePicker"  // <-- Forces an input field with ms units
-//% MSpeedPin.fieldEditor="gridpicker" MSpeedPin.fieldOptions.columns=5
-//% MSpeedPin.fieldOptions.tooltips="false" MSpeedPin.fieldOptions.width="300"
-//% MSpeedPin.defl=255
-//% McontrolPin.fieldEditor="gridpicker" McontrolPin.fieldOptions.columns=5
-//% McontrolPin.fieldOptions.tooltips="false" McontrolPin.fieldOptions.width="300"
-//% group="Motor"
-export function DDMmotor(
-    MSpeedPin: AnalogPinExt,
-    MSpeedValue: number = 255,
-    McontrolPin: DigitalPinExt,
-    McontrolValue: number,
-    timeMs: number = -1,  // Default: run indefinitely
-): void {
-    // Map AnalogPinExt to AnalogPin
-    const analogPinMap = {
-        [AnalogPinExt.CaseZ]: AnalogPin.P0,
-        [AnalogPinExt.CaseA]: AnalogPin.P1,
-        [AnalogPinExt.CaseB]: AnalogPin.P2,
-        [AnalogPinExt.CaseC]: AnalogPin.P3,
-        [AnalogPinExt.CaseD]: AnalogPin.P4,
-        [AnalogPinExt.CaseE]: AnalogPin.P5,
-        [AnalogPinExt.CaseF]: AnalogPin.P6,
-        [AnalogPinExt.CaseG]: AnalogPin.P7,
-        [AnalogPinExt.CaseH]: AnalogPin.P8,
-        [AnalogPinExt.CaseI]: AnalogPin.P9,
-        [AnalogPinExt.CaseJ]: AnalogPin.P10,
-        [AnalogPinExt.CaseK]: AnalogPin.P11,
-        [AnalogPinExt.CaseL]: AnalogPin.P12,
-        [AnalogPinExt.CaseM]: AnalogPin.P13,
-        [AnalogPinExt.CaseN]: AnalogPin.P14,
-        [AnalogPinExt.CaseO]: AnalogPin.P15,
-        [AnalogPinExt.CaseP]: AnalogPin.P16,
-        [AnalogPinExt.CaseQ]: AnalogPin.P17,
-        [AnalogPinExt.CaseR]: AnalogPin.P18,
-        [AnalogPinExt.CaseS]: AnalogPin.P19,
-        [AnalogPinExt.CaseT]: AnalogPin.P20,
-    };
+    //% blockId=DDMmotor block="speed pin %MSpeedPin|speed (0~255) %MSpeedValue|direction pin %McontrolPin|rotation direction(0~1) %McontrolValue|for ms %timeMs"
+    //% McontrolValue.min=0 McontrolValue.max=1 
+    //% MSpeedValue.min=0 MSpeedValue.max=255
+    //% timeMs.defl=-1 timeMs.min=-1 
+    //% timeMs.shadow="timePicker"  // <-- Forces an input field with ms units
+    //% MSpeedPin.fieldEditor="gridpicker" MSpeedPin.fieldOptions.columns=5
+    //% MSpeedPin.fieldOptions.tooltips="false" MSpeedPin.fieldOptions.width="300"
+    //% MSpeedPin.defl=255
+    //% McontrolPin.fieldEditor="gridpicker" McontrolPin.fieldOptions.columns=5
+    //% McontrolPin.fieldOptions.tooltips="false" McontrolPin.fieldOptions.width="300"
+    //% group="Motor"
+    export function DDMmotor(
+        MSpeedPin: AnalogPinExt,
+        MSpeedValue: number = 255,
+        McontrolPin: DigitalPinExt,
+        McontrolValue: number,
+        timeMs: number = -1,  // Default: run indefinitely
+    ): void {
+        // Set motor speed and direction
+        pins.analogWritePin(analogPinMap[MSpeedPin], pins.map(MSpeedValue, 0, 255, 0, 1020));
+        pins.digitalWritePin(digitalPinMap[McontrolPin], McontrolValue);
 
-    // Map DigitalPinExt to DigitalPin
-    const digitalPinMap = {
-        [DigitalPinExt.CaseZ]: DigitalPin.P0,
-        [DigitalPinExt.CaseA]: DigitalPin.P1,
-        [DigitalPinExt.CaseB]: DigitalPin.P2,
-        [DigitalPinExt.CaseC]: DigitalPin.P3,
-        [DigitalPinExt.CaseD]: DigitalPin.P4,
-        [DigitalPinExt.CaseE]: DigitalPin.P5,
-        [DigitalPinExt.CaseF]: DigitalPin.P6,
-        [DigitalPinExt.CaseG]: DigitalPin.P7,
-        [DigitalPinExt.CaseH]: DigitalPin.P8,
-        [DigitalPinExt.CaseI]: DigitalPin.P9,
-        [DigitalPinExt.CaseJ]: DigitalPin.P10,
-        [DigitalPinExt.CaseK]: DigitalPin.P11,
-        [DigitalPinExt.CaseL]: DigitalPin.P12,
-        [DigitalPinExt.CaseM]: DigitalPin.P13,
-        [DigitalPinExt.CaseN]: DigitalPin.P14,
-        [DigitalPinExt.CaseO]: DigitalPin.P15,
-        [DigitalPinExt.CaseP]: DigitalPin.P16,
-        [DigitalPinExt.CaseQ]: DigitalPin.P17,
-        [DigitalPinExt.CaseR]: DigitalPin.P18,
-        [DigitalPinExt.CaseS]: DigitalPin.P19,
-        [DigitalPinExt.CaseT]: DigitalPin.P20,
-    };
-
-    // Set motor speed and direction
-    pins.analogWritePin(analogPinMap[MSpeedPin], pins.map(MSpeedValue, 0, 255, 0, 1020));
-    pins.digitalWritePin(digitalPinMap[McontrolPin], McontrolValue);
-
-    // Stop after timeMs if >= 0
-    if (timeMs >= 0) {
-        basic.pause(timeMs);
-        pins.analogWritePin(analogPinMap[MSpeedPin], 0); // Stop motor
+        // Stop after timeMs if >= 0
+        if (timeMs >= 0) {
+            basic.pause(timeMs);
+            pins.analogWritePin(analogPinMap[MSpeedPin], 0); // Stop motor
+        }
     }
-}
 
     ////////////////////////////////
     //          超音波            //
@@ -453,12 +325,13 @@ export function DDMmotor(
             default: return d;
         }
     }
+
     ////////////////////////////////
     //          RGB LEDS          //
     ////////////////////////////////
     /**
-         * Create a  RGB LED Pin.
-         */
+     * Create a  RGB LED Pin.
+     */
     //% blockId="RGBLED_create" block="pin %pin|"
     //% weight=100 blockGap=8
     //% trackArgs=0,2
@@ -475,16 +348,13 @@ export function DDMmotor(
         pins.digitalWritePin(RGBLED.pin, pin);
         return RGBLED;
     }
+
     export class HaloHd {
         buf: Buffer;
         pin: DigitalPin;
         brightness: number;
         start: number;
         _length: number;
-
-
-
-
 
         /**
          * Shows whole ZIP Halo display as a given color (range 0-255 for r, g, b). 
@@ -499,8 +369,6 @@ export function DDMmotor(
             this.setAllRGB(rgb);
             this.show();
         }
-
-
 
         /**
          * Send all the changes to the ZIP Halo display.
@@ -583,8 +451,6 @@ export function DDMmotor(
             this.setBufferRGB(pixeloffset, red, green, blue)
         }
     }
-
-
 
     /**
      * Converts wavelength value to red, green, blue channels
@@ -679,16 +545,19 @@ export function DDMmotor(
     function packRGB(a: number, b: number, c: number): number {
         return ((a & 0xFF) << 16) | ((b & 0xFF) << 8) | (c & 0xFF);
     }
+
     //Separates red value from combined number
     function unpackR(rgb: number): number {
         let r = (rgb >> 16) & 0xFF;
         return r;
     }
+
     //Separates green value from combined number
     function unpackG(rgb: number): number {
         let g = (rgb >> 8) & 0xFF;
         return g;
     }
+
     //Separates blue value from combined number
     function unpackB(rgb: number): number {
         let b = (rgb) & 0xFF;
@@ -754,18 +623,18 @@ export function DDMmotor(
         pins.i2cWriteNumber(41, 33276, NumberFormat.UInt16BE, false)
         pins.i2cWriteNumber(41, 32771, NumberFormat.UInt16BE, false)
     }
+
     /**
     */
     let nowReadColor = [0, 0, 0]
+
     //% weight=12
     //% block="color sensor read color"
     //% subcategory="Add on pack"
     //% group="Color Sensor"
     export function ColorSensorReadColor(): void {
         pins.i2cWriteNumber(41, 178, NumberFormat.Int8LE, false)
-
         pins.i2cWriteNumber(41, 179, NumberFormat.Int8LE, false)
-
         pins.i2cWriteNumber(41, 182, NumberFormat.Int8LE, true)
         let TCS_RED = pins.i2cReadNumber(41, NumberFormat.UInt16BE, false)
         pins.i2cWriteNumber(41, 184, NumberFormat.Int8LE, true)
@@ -777,6 +646,7 @@ export function DDMmotor(
         TCS_BLUE = Math.round(Math.map(TCS_BLUE, 0, 65535, 0, 255))
         nowReadColor = [TCS_RED, TCS_GREEN, TCS_BLUE]
     }
+
     /**
    */
     export enum Channel {
@@ -787,15 +657,14 @@ export function DDMmotor(
         //% block="B"
         Blue = 3
     }
+
     //% weight=12
     //% block="color sensor read RGB %channel |channel"
     //% subcategory="Add on pack"
     //% group="Color Sensor"
     export function ColorSensorRead(channel: Channel = 1): number {
         pins.i2cWriteNumber(41, 178, NumberFormat.Int8LE, false)
-
         pins.i2cWriteNumber(41, 179, NumberFormat.Int8LE, false)
-
         pins.i2cWriteNumber(41, 182, NumberFormat.Int8LE, true)
         let TCS_RED = pins.i2cReadNumber(41, NumberFormat.UInt16BE, false)
         pins.i2cWriteNumber(41, 184, NumberFormat.Int8LE, true)
@@ -818,6 +687,7 @@ export function DDMmotor(
 
         return RdCl
     }
+
     export enum ColorPart {
         //% block="Red"
         Red = 1,
@@ -846,61 +716,19 @@ export function DDMmotor(
     let ReadCustom2Color = [0, 0, 0]
     let ReadCustom3Color = [0, 0, 0]
 
-    //% weight=12
-    //% block="color sensor record %colorpart |"
-    //% subcategory="Add on pack"
-    //% group="Color Sensor"
-    export function ColorSensorRecord(colorpart: ColorPart = 1): void {
-        pins.i2cWriteNumber(41, 178, NumberFormat.Int8LE, false)
-
-        pins.i2cWriteNumber(41, 179, NumberFormat.Int8LE, false)
-
-        pins.i2cWriteNumber(41, 182, NumberFormat.Int8LE, true)
-        let TCS_RED = pins.i2cReadNumber(41, NumberFormat.UInt16BE, false)
-        pins.i2cWriteNumber(41, 184, NumberFormat.Int8LE, true)
-        let TCS_GREEN = pins.i2cReadNumber(41, NumberFormat.UInt16BE, false)
-        pins.i2cWriteNumber(41, 186, NumberFormat.Int8LE, true)
-        let TCS_BLUE = pins.i2cReadNumber(41, NumberFormat.UInt16BE, false)
-        TCS_RED = Math.round(Math.map(TCS_RED, 0, 65535, 0, 255))
-        TCS_GREEN = Math.round(Math.map(TCS_GREEN, 0, 65535, 0, 255))
-        TCS_BLUE = Math.round(Math.map(TCS_BLUE, 0, 65535, 0, 255))
-        switch (colorpart) {
-            case 1:
-                ReadRedColor = [TCS_RED, TCS_GREEN, TCS_BLUE]
-                break;
-            case 2:
-                ReadGreenColor = [TCS_RED, TCS_GREEN, TCS_BLUE]
-                break;
-            case 3:
-                ReadBlueColor = [TCS_RED, TCS_GREEN, TCS_BLUE]
-                break;
-            case 4:
-                ReadYellowColor = [TCS_RED, TCS_GREEN, TCS_BLUE]
-                break;
-            case 5:
-                ReadPurpleColor = [TCS_RED, TCS_GREEN, TCS_BLUE]
-                break;
-            case 6:
-                ReadCustom1Color = [TCS_RED, TCS_GREEN, TCS_BLUE]
-                break;
-            case 7:
-                ReadCustom2Color = [TCS_RED, TCS_GREEN, TCS_BLUE]
-                break;
-            case 8:
-                ReadCustom3Color = [TCS_RED, TCS_GREEN, TCS_BLUE]
-                break;
-        }
+    // Helper function to compare colors
+    function compareColors(readColor: number[], writeColor: number[]): boolean {
+        return (
+            Math.abs(readColor[0] - nowReadColor[0]) < forkrange &&
+            Math.abs(readColor[1] - nowReadColor[1]) < forkrange &&
+            Math.abs(readColor[2] - nowReadColor[2]) < forkrange
+        ) || (
+            Math.abs(writeColor[0] - nowReadColor[0]) < forkrange &&
+            Math.abs(writeColor[1] - nowReadColor[1]) < forkrange &&
+            Math.abs(writeColor[2] - nowReadColor[2]) < forkrange
+        );
     }
-    let WriteRedColor = [0, 0, 0]
-    let WriteGreenColor = [0, 0, 0]
-    let WriteBlueColor = [0, 0, 0]
-    let WriteYellowColor = [0, 0, 0]
-    let WritePurpleColor = [0, 0, 0]
-    let WriteCustom1Color = [0, 0, 0]
-    let WriteCustom2Color = [0, 0, 0]
-    let WriteCustom3Color = [0, 0, 0]
-    let colorright = false
-    let forkrange = 5
+
     //% weight=99 blockGap=8
     //% block="read R %WriteRed|and G %WriteGreen|and B %WriteBlue equal to %colorpart|"
     //% WriteRed.min=0 WriteRed.max=255
@@ -909,111 +737,46 @@ export function DDMmotor(
     //% subcategory="Add on pack"
     //% group="Color Sensor"
     export function ReadColorEqual(WriteRed: number, WriteGreen: number, WriteBlue: number, colorpart: ColorPart = 1): boolean {
+        let writeColor = [WriteRed, WriteGreen, WriteBlue];
+        let readColor: number[];
+
         switch (colorpart) {
             case 1:
-                WriteRedColor = [WriteRed, WriteGreen, WriteBlue];
-                if ((Math.abs(ReadRedColor[0] - nowReadColor[0]) < forkrange) && (Math.abs(ReadRedColor[1] - nowReadColor[1]) < forkrange) && (Math.abs(ReadRedColor[2] - nowReadColor[2]) < forkrange)) {
-                    colorright = true
-                }
-                else if ((Math.abs(WriteRedColor[0] - nowReadColor[0]) < forkrange) && (Math.abs(WriteRedColor[1] - nowReadColor[1]) < forkrange) && (Math.abs(WriteRedColor[2] - nowReadColor[2]) < forkrange)) {
-                    colorright = true
-                }
-                else {
-                    colorright = false
-                }
+                ReadRedColor = writeColor;
+                readColor = ReadRedColor;
                 break;
             case 2:
-                WriteGreenColor = [WriteRed, WriteGreen, WriteBlue];
-                if ((Math.abs(ReadGreenColor[0] - nowReadColor[0]) < forkrange) && (Math.abs(ReadGreenColor[1] - nowReadColor[1]) < forkrange) && (Math.abs(ReadGreenColor[2] - nowReadColor[2]) < forkrange)) {
-                    colorright = true
-                }
-                else if ((Math.abs(WriteGreenColor[0] - nowReadColor[0]) < forkrange) && (Math.abs(WriteGreenColor[1] - nowReadColor[1]) < forkrange) && (Math.abs(WriteGreenColor[2] - nowReadColor[2]) < forkrange)) {
-                    colorright = true
-                }
-                else {
-                    colorright = false
-                }
+                ReadGreenColor = writeColor;
+                readColor = ReadGreenColor;
                 break;
             case 3:
-                WriteBlueColor = [WriteRed, WriteGreen, WriteBlue];
-                if ((Math.abs(ReadBlueColor[0] - nowReadColor[0]) < forkrange) && (Math.abs(ReadBlueColor[1] - nowReadColor[1]) < forkrange) && (Math.abs(ReadBlueColor[2] - nowReadColor[2]) < forkrange)) {
-                    colorright = true
-                }
-                else if ((Math.abs(WriteBlueColor[0] - nowReadColor[0]) < forkrange) && (Math.abs(WriteBlueColor[1] - nowReadColor[1]) < forkrange) && (Math.abs(WriteBlueColor[2] - nowReadColor[2]) < forkrange)) {
-                    colorright = true
-                }
-                else {
-                    colorright = false
-                }
+                ReadBlueColor = writeColor;
+                readColor = ReadBlueColor;
                 break;
             case 4:
-                WriteYellowColor = [WriteRed, WriteGreen, WriteBlue];
-                if ((Math.abs(ReadYellowColor[0] - nowReadColor[0]) < forkrange) && (Math.abs(ReadYellowColor[1] - nowReadColor[1]) < forkrange) && (Math.abs(ReadYellowColor[2] - nowReadColor[2]) < forkrange)) {
-                    colorright = true
-                }
-                else if ((Math.abs(WriteYellowColor[0] - nowReadColor[0]) < forkrange) && (Math.abs(WriteYellowColor[1] - nowReadColor[1]) < forkrange) && (Math.abs(WriteYellowColor[2] - nowReadColor[2]) < forkrange)) {
-                    colorright = true
-                }
-                else {
-                    colorright = false
-                }
+                ReadYellowColor = writeColor;
+                readColor = ReadYellowColor;
                 break;
-
             case 5:
-                WritePurpleColor = [WriteRed, WriteGreen, WriteBlue];
-                if ((Math.abs(ReadPurpleColor[0] - nowReadColor[0]) < forkrange) && (Math.abs(ReadPurpleColor[1] - nowReadColor[1]) < forkrange) && (Math.abs(ReadPurpleColor[2] - nowReadColor[2]) < forkrange)) {
-                    colorright = true
-                }
-                else if ((Math.abs(WritePurpleColor[0] - nowReadColor[0]) < forkrange) && (Math.abs(WritePurpleColor[1] - nowReadColor[1]) < forkrange) && (Math.abs(WritePurpleColor[2] - nowReadColor[2]) < forkrange)) {
-                    colorright = true
-                }
-                else {
-                    colorright = false
-                }
+                ReadPurpleColor = writeColor;
+                readColor = ReadPurpleColor;
                 break;
             case 6:
-                WriteCustom1Color = [WriteRed, WriteGreen, WriteBlue];
-                if ((Math.abs(ReadCustom1Color[0] - nowReadColor[0]) < forkrange) && (Math.abs(ReadCustom1Color[1] - nowReadColor[1]) < forkrange) && (Math.abs(ReadCustom1Color[2] - nowReadColor[2]) < forkrange)) {
-                    colorright = true
-                }
-                else if ((Math.abs(WriteCustom1Color[0] - nowReadColor[0]) < forkrange) && (Math.abs(WriteCustom1Color[1] - nowReadColor[1]) < forkrange) && (Math.abs(WriteCustom1Color[2] - nowReadColor[2]) < forkrange)) {
-                    colorright = true
-                }
-                else {
-                    colorright = false
-                }
+                ReadCustom1Color = writeColor;
+                readColor = ReadCustom1Color;
                 break;
             case 7:
-                WriteCustom2Color = [WriteRed, WriteGreen, WriteBlue];
-                if ((Math.abs(ReadCustom2Color[0] - nowReadColor[0]) < forkrange) && (Math.abs(ReadCustom2Color[1] - nowReadColor[1]) < forkrange) && (Math.abs(ReadCustom2Color[2] - nowReadColor[2]) < forkrange)) {
-                    colorright = true
-                }
-                else if ((Math.abs(WriteCustom2Color[0] - nowReadColor[0]) < forkrange) && (Math.abs(WriteCustom2Color[1] - nowReadColor[1]) < forkrange) && (Math.abs(WriteCustom2Color[2] - nowReadColor[2]) < forkrange)) {
-                    colorright = true
-                }
-                else {
-                    colorright = false
-                }
+                ReadCustom2Color = writeColor;
+                readColor = ReadCustom2Color;
                 break;
             case 8:
-                WriteCustom3Color = [WriteRed, WriteGreen, WriteBlue];
-                if ((Math.abs(ReadCustom3Color[0] - nowReadColor[0]) < forkrange) && (Math.abs(ReadCustom3Color[1] - nowReadColor[1]) < forkrange) && (Math.abs(ReadCustom3Color[2] - nowReadColor[2]) < forkrange)) {
-                    colorright = true
-                }
-                else if ((Math.abs(WriteCustom3Color[0] - nowReadColor[0]) < forkrange) && (Math.abs(WriteCustom3Color[1] - nowReadColor[1]) < forkrange) && (Math.abs(WriteCustom3Color[2] - nowReadColor[2]) < forkrange)) {
-                    colorright = true
-                }
-                else {
-                    colorright = false
-                }
+                ReadCustom3Color = writeColor;
+                readColor = ReadCustom3Color;
                 break;
+            default:
+                return false;
         }
-        if (colorright == true) {
-            return true
-        }
-        else {
-            return false
-        }
-    }
 
+        return compareColors(readColor, writeColor);
+    }
 }
