@@ -360,19 +360,65 @@ export function DDMmotor(
     McontrolPin: DigitalPinExt,
     McontrolValue: number,
     timeMs: number = -1,  // Default: run indefinitely
-
 ): void {
+    // Map AnalogPinExt to AnalogPin
+    const analogPinMap = {
+        [AnalogPinExt.CaseZ]: AnalogPin.P0,
+        [AnalogPinExt.CaseA]: AnalogPin.P1,
+        [AnalogPinExt.CaseB]: AnalogPin.P2,
+        [AnalogPinExt.CaseC]: AnalogPin.P3,
+        [AnalogPinExt.CaseD]: AnalogPin.P4,
+        [AnalogPinExt.CaseE]: AnalogPin.P5,
+        [AnalogPinExt.CaseF]: AnalogPin.P6,
+        [AnalogPinExt.CaseG]: AnalogPin.P7,
+        [AnalogPinExt.CaseH]: AnalogPin.P8,
+        [AnalogPinExt.CaseI]: AnalogPin.P9,
+        [AnalogPinExt.CaseJ]: AnalogPin.P10,
+        [AnalogPinExt.CaseK]: AnalogPin.P11,
+        [AnalogPinExt.CaseL]: AnalogPin.P12,
+        [AnalogPinExt.CaseM]: AnalogPin.P13,
+        [AnalogPinExt.CaseN]: AnalogPin.P14,
+        [AnalogPinExt.CaseO]: AnalogPin.P15,
+        [AnalogPinExt.CaseP]: AnalogPin.P16,
+        [AnalogPinExt.CaseQ]: AnalogPin.P17,
+        [AnalogPinExt.CaseR]: AnalogPin.P18,
+        [AnalogPinExt.CaseS]: AnalogPin.P19,
+        [AnalogPinExt.CaseT]: AnalogPin.P20,
+    };
+
+    // Map DigitalPinExt to DigitalPin
+    const digitalPinMap = {
+        [DigitalPinExt.CaseZ]: DigitalPin.P0,
+        [DigitalPinExt.CaseA]: DigitalPin.P1,
+        [DigitalPinExt.CaseB]: DigitalPin.P2,
+        [DigitalPinExt.CaseC]: DigitalPin.P3,
+        [DigitalPinExt.CaseD]: DigitalPin.P4,
+        [DigitalPinExt.CaseE]: DigitalPin.P5,
+        [DigitalPinExt.CaseF]: DigitalPin.P6,
+        [DigitalPinExt.CaseG]: DigitalPin.P7,
+        [DigitalPinExt.CaseH]: DigitalPin.P8,
+        [DigitalPinExt.CaseI]: DigitalPin.P9,
+        [DigitalPinExt.CaseJ]: DigitalPin.P10,
+        [DigitalPinExt.CaseK]: DigitalPin.P11,
+        [DigitalPinExt.CaseL]: DigitalPin.P12,
+        [DigitalPinExt.CaseM]: DigitalPin.P13,
+        [DigitalPinExt.CaseN]: DigitalPin.P14,
+        [DigitalPinExt.CaseO]: DigitalPin.P15,
+        [DigitalPinExt.CaseP]: DigitalPin.P16,
+        [DigitalPinExt.CaseQ]: DigitalPin.P17,
+        [DigitalPinExt.CaseR]: DigitalPin.P18,
+        [DigitalPinExt.CaseS]: DigitalPin.P19,
+        [DigitalPinExt.CaseT]: DigitalPin.P20,
+    };
+
     // Set motor speed and direction
-    // pins.analogWritePin(MSpeedPin, pins.map(MSpeedValue, 0, 255, 0, 1020));
-    // pins.digitalWritePin(McontrolPin, McontrolValue);
-    controlpinDigitalExt(McontrolPin,McontrolValue);
-    controlpinAnalogExt(MSpeedPin,MSpeedValue)
-    
+    pins.analogWritePin(analogPinMap[MSpeedPin], pins.map(MSpeedValue, 0, 255, 0, 1020));
+    pins.digitalWritePin(digitalPinMap[McontrolPin], McontrolValue);
 
     // Stop after timeMs if >= 0
     if (timeMs >= 0) {
         basic.pause(timeMs);
-        pins.analogWritePin(MSpeedPin, 0); // Stop motor
+        pins.analogWritePin(analogPinMap[MSpeedPin], 0); // Stop motor
     }
 }
 
