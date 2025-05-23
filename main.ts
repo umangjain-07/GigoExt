@@ -41,13 +41,166 @@ enum RGBLedColors {
 
 }
 
-/**
- * Control micro servos
- */
-//% color="#03AA74" weight=88 icon="\uf021" blockGap=8
-//% groups='["Positional", "Continuous", "Configuration"]'
-namespace servos {
-    //% fixedInstances
+
+namespace GigoExt {
+
+    ////////////////////////////////
+    //          DDM Motor         //
+    ////////////////////////////////
+
+
+/**DDM DDM
+*/
+//% blockId=DDMmotor2 block="motor channel %MotorPin|speed (0~255) %MSpeedValue|direction (0~1) %McontrolValue|for ms %MTimeValue"
+//% McontrolValue.min=0 McontrolValue.max=1 
+//% MSpeedValue.min=0 MSpeedValue.max=255
+//% MTimeValue.defl=-1 MTimeValue.min=-1
+//% MTimeValue.shadow="timePicker"  // <-- Forces an input field with ms units
+//% MotorPin.fieldEditor="gridpicker" MotorPin.fieldOptions.columns=4
+//% MotorPin.fieldOptions.tooltips="false" MotorPin.fieldOptions.width="300"
+//% group="Motor"
+export function DDMmotor2(
+    MotorPin: MotorChannel,
+    MSpeedValue: number,
+    McontrolValue: number,
+    MTimeValue: number = -1  // Default: run indefinitely
+): void {
+    // Function to control the motor
+    const controlMotor = () => {
+        switch (MotorPin) {
+            case 1:
+                pins.analogWritePin(AnalogPin.P16, pins.map(MSpeedValue, 0, 255, 0, 1020));
+                pins.digitalWritePin(DigitalPin.P15, McontrolValue);
+                break;
+            case 2:
+                pins.analogWritePin(AnalogPin.P14, pins.map(MSpeedValue, 0, 255, 0, 1020));
+                pins.digitalWritePin(DigitalPin.P13, McontrolValue);
+                break;
+            case 3:
+                pins.analogWritePin(AnalogPin.P2, pins.map(MSpeedValue, 0, 255, 0, 1020));
+                pins.digitalWritePin(DigitalPin.P12, McontrolValue);
+                break;
+            case 4:
+                pins.analogWritePin(AnalogPin.P8, pins.map(MSpeedValue, 0, 255, 0, 1020));
+                pins.digitalWritePin(DigitalPin.P1, McontrolValue);
+                break;
+        }
+    };
+
+    // Function to stop the motor
+    const stopMotor = () => {
+        switch (MotorPin) {
+            case 1:
+                pins.analogWritePin(AnalogPin.P16, 0);
+                break;
+            case 2:
+                pins.analogWritePin(AnalogPin.P14, 0);
+                break;
+            case 3:
+                pins.analogWritePin(AnalogPin.P2, 0);
+                break;
+            case 4:
+                pins.analogWritePin(AnalogPin.P8, 0);
+                break;
+        }
+    };
+
+    // Control the motor based on time parameter
+    if (MTimeValue <= 0) {
+        // Run indefinitely if time is -1 or 0
+        controlMotor();
+    } else {
+        // Run for specified time then stop
+        controlMotor();
+        basic.pause(MTimeValue);
+        stopMotor();
+    }
+}
+    /**DDM Module
+      */
+//% blockId=DDMmotor block="speed pin %MSpeedPin|speed (0~255) %MSpeedValue|direction pin %McontrolPin|rotation direction(0~1) %McontrolValue|for ms %timeMs"
+//% McontrolValue.min=0 McontrolValue.max=1 
+//% MSpeedValue.min=0 MSpeedValue.max=255
+//% timeMs.defl=-1 timeMs.min=-1 
+//% timeMs.shadow="timePicker"  // <-- Forces an input field with ms units
+//% MSpeedPin.fieldEditor="gridpicker" MSpeedPin.fieldOptions.columns=5
+//% MSpeedPin.fieldOptions.tooltips="false" MSpeedPin.fieldOptions.width="300"
+//% MSpeedPin.defl=255
+//% McontrolPin.fieldEditor="gridpicker" McontrolPin.fieldOptions.columns=5
+//% McontrolPin.fieldOptions.tooltips="false" McontrolPin.fieldOptions.width="300"
+//% group="Motor"
+export function DDMmotor(
+    MSpeedPin: AnalogPin,
+    MSpeedValue: number = 255,
+    McontrolPin: DigitalPin,
+    McontrolValue: number,
+    timeMs: number = -1  // Default: run indefinitely
+
+): void {
+    // Set motor speed and direction
+    pins.analogWritePin(MSpeedPin, pins.map(MSpeedValue, 0, 255, 0, 1020));
+    pins.digitalWritePin(McontrolPin, McontrolValue);
+
+    // Stop after timeMs if >= 0
+    if (timeMs >= 0) {
+        basic.pause(timeMs);
+        pins.analogWritePin(MSpeedPin, 0); // Stop motor
+    }
+}
+
+    ////////////////////////////////
+    //          超音波            //
+    ////////////////////////////////
+    /**超音波註解
+     * Send a ping and get the echo time (in microseconds) as a result
+     * @param trig tigger pin
+     * @param echo echo pin
+     * @param unit desired conversion unit
+     * @param maxCmDistance maximum distance in centimeters (default is 500)
+     */
+
+    //% blockId=sonar_ping block="trig pin %trig|echo pin %echo|unit %unit"
+    //% group="Ultrasonic Sensor"
+    export function ping(trig: DigitalPin, echo: DigitalPin, unit: PingUnit, maxCmDistance = 500): number {
+        // send pulse
+        pins.setPull(trig, PinPullMode.PullNone);
+        pins.digitalWritePin(trig, 0);
+        control.waitMicros(2);
+        pins.digitalWritePin(trig, 1);
+        control.waitMicros(10);
+        pins.digitalWritePin(trig, 0);
+
+        // read pulse
+        const d = pins.pulseIn(echo, PulseValue.High, maxCmDistance * 58);
+
+        switch (unit) {
+            case PingUnit.Centimeters: return Math.idiv(d, 58);
+            case PingUnit.Inches: return Math.idiv(d, 148);
+            default: return d;
+        }
+    }
+    ////////////////////////////////
+    //          RGB LEDS          //
+    ////////////////////////////////
+    /**
+         * Create a  RGB LED Pin.
+         */
+    //% blockId="RGBLED_create" block="pin %pin|"
+    //% weight=100 blockGap=8
+    //% trackArgs=0,2
+    //% blockSetVariable=RGBLED
+    //% subcategory="Add on pack"
+    //% group="RGB LED"
+    export function RGBLED_create(pin: DigitalPin): HaloHd {
+        let RGBLED = new HaloHd();
+        RGBLED.buf = pins.createBuffer(1 * 3);
+        RGBLED.start = 0;
+        RGBLED._length = 1;/*LED數量*/
+        RGBLED.RGBLED_set_brightness(128)
+        RGBLED.pin = pin;
+        pins.digitalWritePin(RGBLED.pin, pin);
+        return RGBLED;
+    }
     export class Servo {
         private _minAngle: number;
         private _maxAngle: number;
@@ -240,166 +393,6 @@ namespace servos {
             this._pin.digitalRead();
             this._pin.setPull(PinPullMode.PullNone);
         }
-    }
-}
-namespace GigoExt {
-
-    ////////////////////////////////
-    //          DDM Motor         //
-    ////////////////////////////////
-
-
-/**DDM DDM
-*/
-//% blockId=DDMmotor2 block="motor channel %MotorPin|speed (0~255) %MSpeedValue|direction (0~1) %McontrolValue|for ms %MTimeValue"
-//% McontrolValue.min=0 McontrolValue.max=1 
-//% MSpeedValue.min=0 MSpeedValue.max=255
-//% MTimeValue.defl=-1 MTimeValue.min=-1
-//% MTimeValue.shadow="timePicker"  // <-- Forces an input field with ms units
-//% MotorPin.fieldEditor="gridpicker" MotorPin.fieldOptions.columns=4
-//% MotorPin.fieldOptions.tooltips="false" MotorPin.fieldOptions.width="300"
-//% group="Motor"
-export function DDMmotor2(
-    MotorPin: MotorChannel,
-    MSpeedValue: number,
-    McontrolValue: number,
-    MTimeValue: number = -1  // Default: run indefinitely
-): void {
-    // Function to control the motor
-    const controlMotor = () => {
-        switch (MotorPin) {
-            case 1:
-                pins.analogWritePin(AnalogPin.P16, pins.map(MSpeedValue, 0, 255, 0, 1020));
-                pins.digitalWritePin(DigitalPin.P15, McontrolValue);
-                break;
-            case 2:
-                pins.analogWritePin(AnalogPin.P14, pins.map(MSpeedValue, 0, 255, 0, 1020));
-                pins.digitalWritePin(DigitalPin.P13, McontrolValue);
-                break;
-            case 3:
-                pins.analogWritePin(AnalogPin.P2, pins.map(MSpeedValue, 0, 255, 0, 1020));
-                pins.digitalWritePin(DigitalPin.P12, McontrolValue);
-                break;
-            case 4:
-                pins.analogWritePin(AnalogPin.P8, pins.map(MSpeedValue, 0, 255, 0, 1020));
-                pins.digitalWritePin(DigitalPin.P1, McontrolValue);
-                break;
-        }
-    };
-
-    // Function to stop the motor
-    const stopMotor = () => {
-        switch (MotorPin) {
-            case 1:
-                pins.analogWritePin(AnalogPin.P16, 0);
-                break;
-            case 2:
-                pins.analogWritePin(AnalogPin.P14, 0);
-                break;
-            case 3:
-                pins.analogWritePin(AnalogPin.P2, 0);
-                break;
-            case 4:
-                pins.analogWritePin(AnalogPin.P8, 0);
-                break;
-        }
-    };
-
-    // Control the motor based on time parameter
-    if (MTimeValue <= 0) {
-        // Run indefinitely if time is -1 or 0
-        controlMotor();
-    } else {
-        // Run for specified time then stop
-        controlMotor();
-        basic.pause(MTimeValue);
-        stopMotor();
-    }
-}
-    /**DDM Module
-      */
-//% blockId=DDMmotor block="speed pin %MSpeedPin|speed (0~255) %MSpeedValue|direction pin %McontrolPin|rotation direction(0~1) %McontrolValue|for ms %timeMs"
-//% McontrolValue.min=0 McontrolValue.max=1 
-//% MSpeedValue.min=0 MSpeedValue.max=255
-//% timeMs.defl=-1 timeMs.min=-1 
-//% timeMs.shadow="timePicker"  // <-- Forces an input field with ms units
-//% MSpeedPin.fieldEditor="gridpicker" MSpeedPin.fieldOptions.columns=5
-//% MSpeedPin.fieldOptions.tooltips="false" MSpeedPin.fieldOptions.width="300"
-//% MSpeedPin.defl=255
-//% McontrolPin.fieldEditor="gridpicker" McontrolPin.fieldOptions.columns=5
-//% McontrolPin.fieldOptions.tooltips="false" McontrolPin.fieldOptions.width="300"
-//% group="Motor"
-export function DDMmotor(
-    MSpeedPin: AnalogPin,
-    MSpeedValue: number = 255,
-    McontrolPin: DigitalPin,
-    McontrolValue: number,
-    timeMs: number = -1  // Default: run indefinitely
-
-): void {
-    // Set motor speed and direction
-    pins.analogWritePin(MSpeedPin, pins.map(MSpeedValue, 0, 255, 0, 1020));
-    pins.digitalWritePin(McontrolPin, McontrolValue);
-
-    // Stop after timeMs if >= 0
-    if (timeMs >= 0) {
-        basic.pause(timeMs);
-        pins.analogWritePin(MSpeedPin, 0); // Stop motor
-    }
-}
-
-    ////////////////////////////////
-    //          超音波            //
-    ////////////////////////////////
-    /**超音波註解
-     * Send a ping and get the echo time (in microseconds) as a result
-     * @param trig tigger pin
-     * @param echo echo pin
-     * @param unit desired conversion unit
-     * @param maxCmDistance maximum distance in centimeters (default is 500)
-     */
-
-    //% blockId=sonar_ping block="trig pin %trig|echo pin %echo|unit %unit"
-    //% group="Ultrasonic Sensor"
-    export function ping(trig: DigitalPin, echo: DigitalPin, unit: PingUnit, maxCmDistance = 500): number {
-        // send pulse
-        pins.setPull(trig, PinPullMode.PullNone);
-        pins.digitalWritePin(trig, 0);
-        control.waitMicros(2);
-        pins.digitalWritePin(trig, 1);
-        control.waitMicros(10);
-        pins.digitalWritePin(trig, 0);
-
-        // read pulse
-        const d = pins.pulseIn(echo, PulseValue.High, maxCmDistance * 58);
-
-        switch (unit) {
-            case PingUnit.Centimeters: return Math.idiv(d, 58);
-            case PingUnit.Inches: return Math.idiv(d, 148);
-            default: return d;
-        }
-    }
-    ////////////////////////////////
-    //          RGB LEDS          //
-    ////////////////////////////////
-    /**
-         * Create a  RGB LED Pin.
-         */
-    //% blockId="RGBLED_create" block="pin %pin|"
-    //% weight=100 blockGap=8
-    //% trackArgs=0,2
-    //% blockSetVariable=RGBLED
-    //% subcategory="Add on pack"
-    //% group="RGB LED"
-    export function RGBLED_create(pin: DigitalPin): HaloHd {
-        let RGBLED = new HaloHd();
-        RGBLED.buf = pins.createBuffer(1 * 3);
-        RGBLED.start = 0;
-        RGBLED._length = 1;/*LED數量*/
-        RGBLED.RGBLED_set_brightness(128)
-        RGBLED.pin = pin;
-        pins.digitalWritePin(RGBLED.pin, pin);
-        return RGBLED;
     }
     export class HaloHd {
         buf: Buffer;
