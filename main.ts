@@ -115,6 +115,16 @@ export function DDMmotor2(
         stopMotor();
     }
 }
+
+    //% blockId=stop_all_motors block="stop all motors"
+    //% group="Motor"
+    export function stopAllMotors(): void {
+        pins.analogWritePin(AnalogPin.P16, 0);
+        pins.analogWritePin(AnalogPin.P14, 0);
+        pins.analogWritePin(AnalogPin.P2, 0);
+        pins.analogWritePin(AnalogPin.P8, 0);
+    }
+
     /**DDM Module
       */
 //% blockId=DDMmotor block="speed pin %MSpeedPin|speed (0~255) %MSpeedValue|direction pin %McontrolPin|rotation direction(0~1) %McontrolValue|for ms %timeMs"
