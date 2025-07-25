@@ -492,26 +492,78 @@ export function DDMmotor(
     /**
     */
     let nowReadColor = [0, 0, 0]
+    /**
+     * Set all motors to the same speed and direction
+     * @param speed Speed (0-255) for all motors
+     * @param direction Direction (0 or 1) for all motors
+     */
+    //% blockId=set_all_motors block="set all motors speed %speed|direction %direction"
+    //% speed.min=0 speed.max=255
+    //% direction.min=0 direction.max=1
+    //% group="Motor"
+    export function setAllMotors(speed: number, direction: number): void {
+        DDMmotor2(MotorChannel.MotorA, speed, direction);
+        DDMmotor2(MotorChannel.MotorB, speed, direction);
+        DDMmotor2(MotorChannel.MotorC, speed, direction);
+        DDMmotor2(MotorChannel.MotorD, speed, direction);
+    }
+
+    /**
+     * Blink the RGB LED a given color for a set duration (ms)
+     * @param rgb RGB color value
+     * @param duration Duration in milliseconds
+     * @param pin Pin for the RGB LED
+     */
+    //% blockId=blink_rgb_led block="blink RGB LED color %rgb|for %duration ms|on pin %pin"
+    //% duration.min=1
+    //% group="RGB LED"
+    export function blinkRGBLED(rgb: number, duration: number, pin: DigitalPin): void {
+        let led = RGBLED_create(pin);
+        led.RGBLED_set_color(rgb);
+        led.show();
+        basic.pause(duration);
+        led.clear();
+        led.show();
+    }
+
+    /**
+     * Returns true if an object is closer than the given distance (cm) using the ultrasonic sensor
+     * @param trig Trigger pin
+     * @param echo Echo pin
+     * @param threshold Distance threshold in centimeters
+     */
+    //% blockId=ultrasonic_distance_threshold block="ultrasonic trig %trig|echo %echo|closer than %threshold cm"
+    //% group="Ultrasonic Sensor"
+    export function isObjectCloserThan(trig: DigitalPin, echo: DigitalPin, threshold: number): boolean {
+        let dist = ping(trig, echo, PingUnit.Centimeters);
+        return dist > 0 && dist < threshold;
+    }
+
+    // Helper function to read color sensor values (returns [R, G, B])
+    function readColorSensorRaw(): [number, number, number] {
+        pins.i2cWriteNumber(41, 178, NumberFormat.Int8LE, false);
+        pins.i2cWriteNumber(41, 179, NumberFormat.Int8LE, false);
+        pins.i2cWriteNumber(41, 182, NumberFormat.Int8LE, true);
+        let TCS_RED = pins.i2cReadNumber(41, NumberFormat.UInt16BE, false);
+        pins.i2cWriteNumber(41, 184, NumberFormat.Int8LE, true);
+        let TCS_GREEN = pins.i2cReadNumber(41, NumberFormat.UInt16BE, false);
+        pins.i2cWriteNumber(41, 186, NumberFormat.Int8LE, true);
+        let TCS_BLUE = pins.i2cReadNumber(41, NumberFormat.UInt16BE, false);
+        TCS_RED = Math.round(Math.map(TCS_RED, 0, 65535, 0, 255));
+        TCS_GREEN = Math.round(Math.map(TCS_GREEN, 0, 65535, 0, 255));
+        TCS_BLUE = Math.round(Math.map(TCS_BLUE, 0, 65535, 0, 255));
+        return [TCS_RED, TCS_GREEN, TCS_BLUE];
+    }
+
+    // Refactor ColorSensorReadColor to use the helper
     //% weight=12
     //% block="color sensor read color"
     //% subcategory="Add on pack"
     //% group="Color Sensor"
     export function ColorSensorReadColor(): void {
-        pins.i2cWriteNumber(41, 178, NumberFormat.Int8LE, false)
-
-        pins.i2cWriteNumber(41, 179, NumberFormat.Int8LE, false)
-
-        pins.i2cWriteNumber(41, 182, NumberFormat.Int8LE, true)
-        let TCS_RED = pins.i2cReadNumber(41, NumberFormat.UInt16BE, false)
-        pins.i2cWriteNumber(41, 184, NumberFormat.Int8LE, true)
-        let TCS_GREEN = pins.i2cReadNumber(41, NumberFormat.UInt16BE, false)
-        pins.i2cWriteNumber(41, 186, NumberFormat.Int8LE, true)
-        let TCS_BLUE = pins.i2cReadNumber(41, NumberFormat.UInt16BE, false)
-        TCS_RED = Math.round(Math.map(TCS_RED, 0, 65535, 0, 255))
-        TCS_GREEN = Math.round(Math.map(TCS_GREEN, 0, 65535, 0, 255))
-        TCS_BLUE = Math.round(Math.map(TCS_BLUE, 0, 65535, 0, 255))
-        nowReadColor = [TCS_RED, TCS_GREEN, TCS_BLUE]
+        nowReadColor = readColorSensorRaw();
     }
+
     /**
    */
     export enum Channel {
@@ -527,31 +579,20 @@ export function DDMmotor(
     //% subcategory="Add on pack"
     //% group="Color Sensor"
     export function ColorSensorRead(channel: Channel = 1): number {
-        pins.i2cWriteNumber(41, 178, NumberFormat.Int8LE, false)
-
-        pins.i2cWriteNumber(41, 179, NumberFormat.Int8LE, false)
-
-        pins.i2cWriteNumber(41, 182, NumberFormat.Int8LE, true)
-        let TCS_RED = pins.i2cReadNumber(41, NumberFormat.UInt16BE, false)
-        pins.i2cWriteNumber(41, 184, NumberFormat.Int8LE, true)
-        let TCS_GREEN = pins.i2cReadNumber(41, NumberFormat.UInt16BE, false)
-        pins.i2cWriteNumber(41, 186, NumberFormat.Int8LE, true)
-        let TCS_BLUE = pins.i2cReadNumber(41, NumberFormat.UInt16BE, false)
-
-        let RdCl = 0
+        let [TCS_RED, TCS_GREEN, TCS_BLUE] = readColorSensorRaw();
+        let RdCl = 0;
         switch (channel) {
             case 1:
-                RdCl = Math.round(Math.map(TCS_RED, 0, 65535, 0, 255))
+                RdCl = TCS_RED;
                 break;
             case 2:
-                RdCl = Math.round(Math.map(TCS_GREEN, 0, 65535, 0, 255))
+                RdCl = TCS_GREEN;
                 break;
             case 3:
-                RdCl = Math.round(Math.map(TCS_BLUE, 0, 65535, 0, 255))
+                RdCl = TCS_BLUE;
                 break;
         }
-
-        return RdCl
+        return RdCl;
     }
     export enum ColorPart {
         //% block="Red"
@@ -581,48 +622,37 @@ export function DDMmotor(
     let ReadCustom2Color = [0, 0, 0]
     let ReadCustom3Color = [0, 0, 0]
 
+    // Refactor ColorSensorRecord to use the helper
     //% weight=12
     //% block="color sensor record %colorpart |"
     //% subcategory="Add on pack"
     //% group="Color Sensor"
     export function ColorSensorRecord(colorpart: ColorPart = 1): void {
-        pins.i2cWriteNumber(41, 178, NumberFormat.Int8LE, false)
-
-        pins.i2cWriteNumber(41, 179, NumberFormat.Int8LE, false)
-
-        pins.i2cWriteNumber(41, 182, NumberFormat.Int8LE, true)
-        let TCS_RED = pins.i2cReadNumber(41, NumberFormat.UInt16BE, false)
-        pins.i2cWriteNumber(41, 184, NumberFormat.Int8LE, true)
-        let TCS_GREEN = pins.i2cReadNumber(41, NumberFormat.UInt16BE, false)
-        pins.i2cWriteNumber(41, 186, NumberFormat.Int8LE, true)
-        let TCS_BLUE = pins.i2cReadNumber(41, NumberFormat.UInt16BE, false)
-        TCS_RED = Math.round(Math.map(TCS_RED, 0, 65535, 0, 255))
-        TCS_GREEN = Math.round(Math.map(TCS_GREEN, 0, 65535, 0, 255))
-        TCS_BLUE = Math.round(Math.map(TCS_BLUE, 0, 65535, 0, 255))
+        let [TCS_RED, TCS_GREEN, TCS_BLUE] = readColorSensorRaw();
         switch (colorpart) {
             case 1:
-                ReadRedColor = [TCS_RED, TCS_GREEN, TCS_BLUE]
+                ReadRedColor = [TCS_RED, TCS_GREEN, TCS_BLUE];
                 break;
             case 2:
-                ReadGreenColor = [TCS_RED, TCS_GREEN, TCS_BLUE]
+                ReadGreenColor = [TCS_RED, TCS_GREEN, TCS_BLUE];
                 break;
             case 3:
-                ReadBlueColor = [TCS_RED, TCS_GREEN, TCS_BLUE]
+                ReadBlueColor = [TCS_RED, TCS_GREEN, TCS_BLUE];
                 break;
             case 4:
-                ReadYellowColor = [TCS_RED, TCS_GREEN, TCS_BLUE]
+                ReadYellowColor = [TCS_RED, TCS_GREEN, TCS_BLUE];
                 break;
             case 5:
-                ReadPurpleColor = [TCS_RED, TCS_GREEN, TCS_BLUE]
+                ReadPurpleColor = [TCS_RED, TCS_GREEN, TCS_BLUE];
                 break;
             case 6:
-                ReadCustom1Color = [TCS_RED, TCS_GREEN, TCS_BLUE]
+                ReadCustom1Color = [TCS_RED, TCS_GREEN, TCS_BLUE];
                 break;
             case 7:
-                ReadCustom2Color = [TCS_RED, TCS_GREEN, TCS_BLUE]
+                ReadCustom2Color = [TCS_RED, TCS_GREEN, TCS_BLUE];
                 break;
             case 8:
-                ReadCustom3Color = [TCS_RED, TCS_GREEN, TCS_BLUE]
+                ReadCustom3Color = [TCS_RED, TCS_GREEN, TCS_BLUE];
                 break;
         }
     }
